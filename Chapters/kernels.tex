@@ -49,7 +49,7 @@ where $\widehat f^\varphi_n$  is defined by \eqref{eq:def:nonparam:reg}.
 See the exercises.
 \end{proof}
 
-\section{Introduction to kernel regression}
+\section{Kernels}
 %Nonparametric classification based on the empirical risk minimization may seem appealing  
 %since its statistical properties, such as oracle inequalities, can be obtained simply. However, these properties cannot be used to
 %derive efficient practical classifiers due to the computational cost of the optimization problem defined by \eqref{eq:empirical:classif}. One of the most popular approach to design efficient algorithm for classification follows from a convexification of the original problem \eqref{eq:empirical:classif}.  The target loss function $\widehat L^n_{\mathrm{miss}}$ is replaced by a convex surrogate and its minimization is constrained to a convex set of classifiers.
@@ -70,11 +70,24 @@ Let $\calF$ be a set of functions from $\xset=\rset^d$ to $\rset$. The multivari
 %In addition, when the smoothness of the function $f$ is penalized, $\widehat L^{n,\mathrm{conv}}_{\mathrm{miss}}$ may be  replaced by 
 \begin{equation}
 \label{eq:erm:rkhs}
-\widehat f^n_{\calF} \in \underset{f\in\calF}{\argmin}\; \frac{1}{n}\sum_{i=1}^n \ell(Y_i,f(X_i)) + \lambda\|f\|^2\eqsp,
+\widehat f^n_{\calF} \in \underset{f\in\calF}{\argmin}\; \frac{1}{n}\sum_{i=1}^n \ell(Y_i,f(X_i)) + \lambda\|f\|_\calF^2\eqsp,
 \end{equation}
-where $\lambda>0$ and $\|\cdot\|$ is a norm on the space $\calF$.  In the case of the Ridge regression $\ell:(y,y'): \mapsto \|y-y'\|_2^2$, $\calF = \{f: \rset^d\to\rset\eqsp;\eqsp \exists \param\in\rset^d \eqsp\forall x\in \rset^d\eqsp, \eqsp f(x) =f_\param(x)= \param^\top x\}$ and, for $\param\in\rset^d$ and $f_\param\in\calF$,  $\|f_\param\|^2 = \|\param\|_2^2$.
-
-A useful case in practice consists in choosing $\calF$ as a Reproducing Kernel Hilbert Space with positive definite reproducing kernel $k$ on $\xset\times \xset$.
+where $\lambda>0$ and $\|\cdot\|_\calF$ is a norm on the space $\calF$.  In the case of the Ridge regression $\ell:(y,y'): \mapsto \|y-y'\|_2^2$, $\calF = \{f: \rset^d\to\rset\eqsp;\eqsp \exists \param\in\rset^d \eqsp\forall x\in \rset^d\eqsp, \eqsp f(x) =f_\param(x)= \param^\top x\}$ and, for $\param\in\rset^d$ and $f_\param\in\calF$,  $\|f_\param\|^2 = \|\param\|_2^2$. Before considering kernel-based regression it is useful to understand how we can use our knowledge on linear regression in a more general setting. Consider $\calF$ a Hilbert space endowed with the inner product $\langle \cdot,\cdot\rangle_\calF$. We will focus on settings where for all $f\in\calF$  there exist a function $\phi:\mathbb{R}^d \to \calF$ and $\theta\in\calF$, such that for all $x\in\mathbb{R}^d$,
+$$
+f(x) = \langle \theta,\phi(x)\rangle_\calF\eqsp.
+$$
+\begin{example}
+Let $f$ be defined on $\mathbb{R}^2$ by $f:(x_1, x_2)\to 2x_1^2 + x_2^2/2 - \sqrt{2} x_1x_2$.  Then, choosing $\calF = \mathbb{R}^3$ with its canonical inner product, $\theta = (2,1/2,-1)^\top$ and $\phi:(x_1, x_2)\to (x_1^2,x_2^2,\sqrt{2}x_1x_2)^\top$ yields $f(x) = \langle \theta,\phi(x)\rangle$.
+\end{example}
+If the function $\phi$ is known, we can use this representation to apply the results on linear regression. 
+%Indeed, in this case, solving
+%\begin{equation*}
+%\widehat f^n_{\calF} \in \underset{f\in\calF}{\argmin}\; \frac{1}{n}\sum_{i=1}^n \ell(Y_i,f(X_i)) + \lambda\|f\|_\calF^2\eqsp,
+%\end{equation*} 
+%amounts to solving
+%\begin{equation*}
+%\widehat f^n_{\calF} \in \underset{f\in\calF}{\argmin}\; \frac{1}{n}\sum_{i=1}^n \ell(Y_i,f(X_i)) + \lambda\|f\|_\calF^2\eqsp.
+%\end{equation*} 
 
 \begin{shaded}
 \begin{definition}
@@ -94,13 +107,49 @@ $$
 \end{remark}
 
 \begin{shaded}
+\begin{proposition}
+Assume that $\calF$ is a Hilbert space endowed with the inner product $\langle \cdot,\cdot\rangle_\calF$. If $k:\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}$ is defined by $k:(x,y) \to \langle \phi(x),\phi(y)\rangle_\calF$ where $\phi : \mathbb{R}^d\to \calF$, then $k$ is a PSD kernel.
+\end{proposition}
+\end{shaded}
+
+\begin{proof}
+By definition of an inner product, $k$ is symmetric. For all $n\geqslant 1$, $(x_1,\ldots,x_n)\in\xset^n$ and all $(a_1,\ldots,a_n)\in\rset^n$,
+\begin{align*}
+\sum_{1\leqslant i,j\leqslant n}a_ia_jk(x_i,x_j) &= \sum_{1\leqslant i,j\leqslant n}a_ia_j\left\langle \phi(x_i) , \phi(x_j)\right\rangle_\calF\\ 
+&= \left\langle \sum_{i=1}^na_i\phi(x_i) , \sum_{j=1}^{n}a_j\phi(x_j)\right\rangle_\calF\\
+&= \left\|\sum_{i=1}^na_i\phi(x_i)\right\|^2_\calF\eqsp,
+\end{align*}
+which completes the proof.
+\end{proof}
+
+\begin{proposition}
+Let $k_1:\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}$ and $k_2:\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}$ be two PSD kernels. Then the following functions are also PSD kernels.
+\begin{enumerate}
+\item $\alpha k_1 + \beta k_2$ for $\alpha, \beta>0$.
+\item $k_1\cdot k_2$.
+\item $\mathrm{exp}(k_1)$.
+\end{enumerate}
+\end{proposition}
+
+\section{Reproducing kernel Hilbert spaces}
+A useful case in practice consists in choosing $\calF$ as a Reproducing Kernel Hilbert Space with positive definite reproducing kernel $k$ on $\xset\times \xset$. A first important result that we do not prove in these notes is the following theorem.
+
+\begin{shaded}
+\begin{theorem}
+Let  $k:\xset\times\xset:\to \rset$ be a PSD kernel. Then, there exist Hilbert space $(\calF, \langle \cdot,\cdot\rangle_\calF)$ and a function $\phi: \mathbb{R}^d\to \calF$ such that $k:(x,y) \to \langle \phi(x),\phi(y)\rangle_\calF$.
+\end{theorem}
+\end{shaded}
+
+We can now introduce a canonical construction of $\calF$ and $\phi$ associated with a PSD kernel $k:\xset\times\xset:\to \rset$.
+
+\begin{shaded}
 \begin{definition}
 Let $\calF$ be a Hilbert space of functions $f:\xset\to\rset$. A symmetric function $k:\xset\times\xset:\to \rset$ is said to be a reproducing kernel of $\calF$ if and only if for all $x\in\xset$, $k(x,\cdot)\in\calF$ and for all $x\in\Xset$ and all $f\in\calF$, $\langle f; k(x,\cdot)\rangle = f(x)$. The space $\calF$ is said to be a reproducing kernel Hilbert space (RKHS) with kernel $k$.
 \end{definition}
 \end{shaded}
 
 \begin{remark}
-For all $x\in\xset$, the function $k(x,\cdot)$ is called afeature map and often written $\varphi(x)$. In this setting, all $x,x'\in\xset$, $k(x,x') = \langle \varphi(x); \varphi(x')\rangle$. An important result given in \cite{} states that  a function $k:\xset\times\xset:\to \rset$ is a positive semi-definite kernel if and only if there exist a Hilbert space $\calF$ and a function $\varphi: \xset\to \calF$ such that $k(x,x') = \langle \varphi(x); \varphi(x')\rangle$.
+For all $x\in\xset$, the function $k(x,\cdot)$ is called a feature map and often written $\phi(x)$. In this setting, all $x,x'\in\xset$, $k(x,x') = \langle \phi(x); \phi(x')\rangle$. An important result states that  a function $k:\xset\times\xset:\to \rset$ is a positive semi-definite kernel if and only if there exist a Hilbert space $\calF$ and a function $\phi: \xset\to \calF$ such that $k(x,x') = \langle \phi(x); \phi(x')\rangle$.
 \end{remark}
 
 A reproducing kernel associated with a reproducing kernel Hilbert space is positive semi-definite since for all $n\geqslant 1$, $(x_1,\ldots,x_n)\in\xset^n$ and all $(a_1,\ldots,a_n)\in\rset^n$,

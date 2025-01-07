@@ -7,8 +7,8 @@ Multi-layer Perceptron, Feed Forward Neural Networks
 
 
 \section{Feed Forward Neural Networks - Multi layer perceptron} 
-\subsection{Classification: loss function and gradient}
-Following the logistic regression approach, the Multi-layer Perceptron (MLP) provides a parametric function to model $\mathbb{P}(Y=k | X)$ for each possible class $k$.
+
+Following the logistic regression approach where $(X,Y)\in\mathbb{R}^d\times \{1,\ldots,M\}$ for $M\geqslant 2$, the Multi-layer Perceptron (MLP) provides a parametric function to model $\mathbb{P}(Y=k | X)$ for each possible class $k$.
 The first  mathematical model for a neuron was the Threshold Logic Unit (McCulloch and Pitts, 1943), with Boolean inputs and outputs. In this setting, the response associated with an input $x\in\{0,1\}^d$ is defined as 
 $$
 f: x\mapsto \1_{\omega\sum_{j=1}^dx_j + b \geqslant 0}\eqsp.
@@ -25,7 +25,7 @@ In this case, the nonlinear activation function is $\sigma: x \mapsto \1_{x\geqs
 \[
 f:x \mapsto \sigma(\omega^\top x + b)\eqsp.
 \]
-Linear discriminant analysis and logistic regression are other instances with the sigmoid activation function $\sigma: x\mapsto \rme^x/(1+\rme^x)$ and the output $ \sigma(\omega^\top X + b)$ in $(0,1)$ is $\mathbb{P}(Y=1 | X)$.
+Linear discriminant analysis and logistic regression are other instances with the sigmoid activation function $\sigma: x\mapsto \rme^x/(1+\rme^x)$ and  $ \sigma(\omega^\top X + b)$ in $(0,1)$ models $\mathbb{P}(Y=1 | X)$.
 %\begin{figure}
 %\begin{center}
 %\includegraphics[scale = .5]{./Data/onelayer.png}
@@ -54,9 +54,12 @@ with $\varphi^m: \rset\to \rset$ the seleced scalar activation function. The rec
 \]
 In this case $d_L = M$ and each component $k$ of $h_{\theta}^L(x)$ contains $\mathbb{P}(Y=k | X)$.
 \end{enumerate}
+
+\section{Gradients and backpropagation}
+\subsection{Classification: loss function and gradient}
 The standard approach to estimate the parameters is by maximizing the logarithm of the likelihood i.e. by minimizing the opposite of the normalized loglikelihood:
 $$
-\ell_n:\theta \mapsto -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{M} \1_{Y_i=k}\log \mathbb{P}_{\theta}(Y_i = k | \bX_i) = -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{M} \1_{Y_i=k}\log f_{\theta}(\bX_i)_k\eqsp.
+\ell_n:\theta \mapsto -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{M} \1_{Y_i=k}\log \mathbb{P}_{\theta}(Y_i = k | X_i) = -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{M} \1_{Y_i=k}\log f_{\theta}(X_i)_k\eqsp.
 $$
 Assume in this section that the last activation function is the softmax function. The output $h_{\theta}^L(x)= f_{\theta}(x) $ is the estimate of the probability that the class is  $k$ for all $1\leqslant k\leqslant M$, given the input $x$ which is obtained with
 \[
@@ -75,25 +78,25 @@ $$
 \begin{shaded}
 \begin{proposition}[Back propagation - classification]
 \label{prop:backpropagation:classif}
-Write $\ell_{\theta}(\bX,Y) =  -\sum_{k=1}^{M} \1_{Y=k}\log f_{\theta}(\bX)_k$ so that 
+Write $\ell_{\theta}(X,Y) =  -\sum_{k=1}^{M} \1_{Y=k}\log f_{\theta}(X)_k$ so that 
 $$
-\ell_n:\theta \mapsto \frac{1}{n} \sum_{i=1}^n \ell_{\theta}(\bX_i,Y_i)\eqsp. 
+\ell_n:\theta \mapsto \frac{1}{n} \sum_{i=1}^n \ell_{\theta}(X_i,Y_i)\eqsp. 
 $$
 Therefore, the gradient with respect to all parameters can be computed as follows.
 \begin{align*}
-\nabla_{W^L} \ell_{\theta}(\bX,Y) &= (f_{\theta}(\bX) - \1_Y)(h_{\theta}^{L-1}(\bX))^T\eqsp,\\
-\nabla_{b^L} \ell_{\theta}(\bX,Y) &= f_{\theta}(\bX) - \1_Y\eqsp,
+\nabla_{W^L} \ell_{\theta}(X,Y) &= (f_{\theta}(X) - \1_Y)(h_{\theta}^{L-1}(X))^\top\eqsp,\\
+\nabla_{b^L} \ell_{\theta}(X,Y) &= f_{\theta}(X) - \1_Y\eqsp,
 \end{align*}
 where $\1_Y$ is the vector where all entries equal to 0 except the entry with index $Y$ which equals 1. Then, for all $1\leqslant m\leqslant L-1$,
 \begin{align*}
-\nabla_{W^m} \ell_{\theta}(\bX,Y) &= \nabla_{z_{\theta}^m(\bX)}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(\bX))^\top\eqsp,\\
-\nabla_{b^m} \ell_{\theta}(\bX,Y) &=  \nabla_{z_{\theta}^m(\bX)}\ell_{\theta}(X,Y)\eqsp,
+\nabla_{W^m} \ell_{\theta}(X,Y) &= \nabla_{z_{\theta}^m(X)}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(X))^\top\eqsp,\\
+\nabla_{b^m} \ell_{\theta}(X,Y) &=  \nabla_{z_{\theta}^m(X)}\ell_{\theta}(X,Y)\eqsp,
 \end{align*}
-where $\nabla_{z_{\theta}^m(\bX)}$ is computed recursively as follows.
+where $\nabla_{z_{\theta}^m(X)}$ is computed recursively as follows.
 \begin{align*}
-\nabla_{z^L(\bX)} \ell_{\theta}(\bX,Y) &= f_{\theta}(\bX) - \1_Y\eqsp,\\
-\nabla_{h_{\theta}^m(\bX)} \ell_{\theta}(\bX,Y) &= (W^{m+1})^\top\nabla_{z_{\theta}^{m+1}(\bX)} \ell_{\theta}(\bX,Y) \eqsp,\\
-\nabla_{z_{\theta}^m(\bX)} \ell_{\theta}(\bX,Y) &= \nabla_{h_{\theta}^m(\bX)}\ell_{\theta}(X,Y) \odot \varphi_m'(z_{\theta}^{m}(\bX))\eqsp,
+\nabla_{z^L(X)} \ell_{\theta}(X,Y) &= f_{\theta}(X) - \1_Y\eqsp,\\
+\nabla_{h_{\theta}^m(X)} \ell_{\theta}(X,Y) &= (W^{m+1})^\top\nabla_{z_{\theta}^{m+1}(X)} \ell_{\theta}(X,Y) \eqsp,\\
+\nabla_{z_{\theta}^m(X)} \ell_{\theta}(X,Y) &= \nabla_{h_{\theta}^m(X)}\ell_{\theta}(X,Y) \odot \varphi_m'(z_{\theta}^{m}(X))\eqsp,
 \end{align*}
 where $\odot$ is the elementwise multiplication.
 \end{proposition}
@@ -101,73 +104,73 @@ where $\odot$ is the elementwise multiplication.
 \begin{proof}
 For all $1\leqslant j\leqslant M$,
 \begin{align*}
-\partial_{(z^L(\bX))_j}\ell_{\theta}(X,Y) &=  -\sum_{k=1}^{M} \1_{Y=k}\partial_{(z^L(\bX))_j}\log f_{\theta}(\bX)_k\eqsp,\\
-&=  -\sum_{k=1}^{M} \1_{Y=k}\partial_{(z^L(\bX))_j}\log \mathrm{softmax}(z^L(\bX))_k\eqsp,\\
-&=  -\sum_{k=1}^{M} \1_{Y=k}\frac{\mathrm{softmax}(z^L(\bX))_j (1-\mathrm{softmax}(z^L(\bX))_j )\1_{j=k} - \mathrm{softmax}(z^L(\bX))_j \mathrm{softmax}(z^L(\bX))_k\1_{j\neq k}}{\mathrm{softmax}(z^L(\bX))_k}\eqsp,\\
-&=  -\sum_{k=1}^{M} \1_{Y=k}\left\{(1-\mathrm{softmax}(z^L(\bX))_k )\1_{j=k} -  \mathrm{softmax}(z^L(\bX))_k\1_{j\neq k}\right\}\eqsp.
+\partial_{(z^L(X))_j}\ell_{\theta}(X,Y) &=  -\sum_{k=1}^{M} \1_{Y=k}\partial_{(z^L(X))_j}\log f_{\theta}(X)_k\eqsp,\\
+&=  -\sum_{k=1}^{M} \1_{Y=k}\partial_{(z^L(X))_j}\log \mathrm{softmax}(z^L(X))_k\eqsp,\\
+&=  -\sum_{k=1}^{M} \1_{Y=k}\frac{\mathrm{softmax}(z^L(X))_j (1-\mathrm{softmax}(z^L(X))_j )\1_{j=k} - \mathrm{softmax}(z^L(X))_j \mathrm{softmax}(z^L(X))_k\1_{j\neq k}}{\mathrm{softmax}(z^L(X))_k}\eqsp,\\
+&=  -\sum_{k=1}^{M} \1_{Y=k}\left\{(1-\mathrm{softmax}(z^L(X))_k )\1_{j=k} -  \mathrm{softmax}(z^L(X))_k\1_{j\neq k}\right\}\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{z^L(\bX)} \ell_{\theta}(\bX,Y) = f_{\theta}(\bX) - \1_Y\eqsp.
+\nabla_{z^L(X)} \ell_{\theta}(X,Y) = f_{\theta}(X) - \1_Y\eqsp.
 $$
-Then, for all $1\leqslant i\leqslant M$ and all $1\leqslant j \leqslant d_{L-1}$, by the chain rule, and using that $z_{\theta}^L(\bX) = b^L + W^Lh_{\theta}^{L-1}(\bX)$,
+Then, for all $1\leqslant i\leqslant M$ and all $1\leqslant j \leqslant d_{L-1}$, by the chain rule, and using that $z_{\theta}^L(X) = b^L + W^Lh_{\theta}^{L-1}(X)$,
 \begin{align*}
-\partial_{W^L_{i,j}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{M} \partial_{(z_{\theta}^L(\bX))_k}\ell_{\theta}(X,Y)\partial_{W^L_{i,j}}(z_{\theta}^L(\bX))_k\eqsp,\\
-&=  \sum_{k=1}^{M} (f_{\theta}(\bX) - \1_Y)_k\1_{i=k}(h_{\theta}^{L-1}(\bX))_j\eqsp,\\
-&=  (f_{\theta}(\bX) - \1_Y)_i(h_{\theta}^{L-1}(\bX))_j\eqsp.
+\partial_{W^L_{i,j}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{M} \partial_{(z_{\theta}^L(X))_k}\ell_{\theta}(X,Y)\partial_{W^L_{i,j}}(z_{\theta}^L(X))_k\eqsp,\\
+&=  \sum_{k=1}^{M} (f_{\theta}(X) - \1_Y)_k\1_{i=k}(h_{\theta}^{L-1}(X))_j\eqsp,\\
+&=  (f_{\theta}(X) - \1_Y)_i(h_{\theta}^{L-1}(X))_j\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{W^L} \ell_{\theta}(\bX,Y) = (f_{\theta}(\bX) - \1_Y)(h_{\theta}^{L-1}(\bX))^\top\eqsp.
+\nabla_{W^L} \ell_{\theta}(X,Y) = (f_{\theta}(X) - \1_Y)(h_{\theta}^{L-1}(X))^\top\eqsp.
 $$
-Similarly, for all $1\leqslant i\leqslant M$,  using that $z_{\theta}^L(\bX) = b^L + W^Lh_{\theta}^{L-1}(\bX)$,
+Similarly, for all $1\leqslant i\leqslant M$,  using that $z_{\theta}^L(X) = b^L + W^Lh_{\theta}^{L-1}(X)$,
 \begin{align*}
-\partial_{b^L_{i}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{M} \partial_{(z_{\theta}^L(\bX))_k}\ell_{\theta}(X,Y)\partial_{b^L_{i}}(z_{\theta}^L(\bX))_k\eqsp,\\
-&=  \sum_{k=1}^{M} (\ell_{\theta}(\bX,Y) - \1_Y)_k\1_{i=k}\eqsp,\\
-&=  (f_{\theta}(\bX) - \1_Y)_i\eqsp.
+\partial_{b^L_{i}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{M} \partial_{(z_{\theta}^L(X))_k}\ell_{\theta}(X,Y)\partial_{b^L_{i}}(z_{\theta}^L(X))_k\eqsp,\\
+&=  \sum_{k=1}^{M} (\ell_{\theta}(X,Y) - \1_Y)_k\1_{i=k}\eqsp,\\
+&=  (f_{\theta}(X) - \1_Y)_i\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{b^L} \ell_{\theta}(\bX,Y) = f_{\theta}(\bX) - \1_Y\eqsp.
+\nabla_{b^L} \ell_{\theta}(X,Y) = f_{\theta}(X) - \1_Y\eqsp.
 $$
-To obtain the recursive formulation of the gradient computations, known as the {\em back propagation} of the gradient, write, for all $1\leqslant m \leqslant L-1$ and all $1\leqslant j \leqslant d_m$, ,  using that $z_{\theta}^{m+1}(\bX) = b^{m+1} + W^{m+1}h_{\theta}^{m}(\bX)$,
+To obtain the recursive formulation of the gradient computations, known as the {\em back propagation} of the gradient, write, for all $1\leqslant m \leqslant L-1$ and all $1\leqslant j \leqslant d_m$, ,  using that $z_{\theta}^{m+1}(X) = b^{m+1} + W^{m+1}h_{\theta}^{m}(X)$,
 \begin{align*}
-\partial_{(h_{\theta}^m(\bX))_j}\ell_{\theta}(X,Y) &=  \sum_{i=1}^{d_{m+1}} \partial_{(z_{\theta}^{m+1}(\bX))_i}\ell_{\theta}(X,Y)\partial_{(h_{\theta}^m(\bX))_j}(z_{\theta}^{m+1}(\bX))_i\eqsp,\\
-&=  \sum_{i=1}^{d_{m+1}} \partial_{(z_{\theta}^{m+1}(\bX))_i}\ell_{\theta}(X,Y)W^{m+1}_{i,j}\eqsp.
+\partial_{(h_{\theta}^m(X))_j}\ell_{\theta}(X,Y) &=  \sum_{i=1}^{d_{m+1}} \partial_{(z_{\theta}^{m+1}(X))_i}\ell_{\theta}(X,Y)\partial_{(h_{\theta}^m(X))_j}(z_{\theta}^{m+1}(X))_i\eqsp,\\
+&=  \sum_{i=1}^{d_{m+1}} \partial_{(z_{\theta}^{m+1}(X))_i}\ell_{\theta}(X,Y)W^{m+1}_{i,j}\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{h_{\theta}^m(\bX)} \ell_{\theta}(\bX,Y) = (W^{m+1})^\top\nabla_{z_{\theta}^{m+1}(\bX)} \ell_{\theta}(\bX,Y) \eqsp.
+\nabla_{h_{\theta}^m(X)} \ell_{\theta}(X,Y) = (W^{m+1})^\top\nabla_{z_{\theta}^{m+1}(X)} \ell_{\theta}(X,Y) \eqsp.
 $$
-Then, for all $1\leqslant m \leqslant L-1$ and all $1\leqslant j \leqslant d_m$, ,  using that $h_{\theta}^{m}(\bX)_j =\varphi_m(z_{\theta}^{m}(\bX)_j)$,
+Then, for all $1\leqslant m \leqslant L-1$ and all $1\leqslant j \leqslant d_m$, ,  using that $h_{\theta}^{m}(X)_j =\varphi_m(z_{\theta}^{m}(X)_j)$,
 \begin{align*}
-\partial_{(z_{\theta}^m(\bX))_j}\ell_{\theta}(X,Y) &=  \sum_{i=1}^{d_{m+1}} \partial_{(h_{\theta}^m(\bX))_i}\ell_{\theta}(X,Y)\partial_{(z_{\theta}^m(\bX))_j}(h_{\theta}^m(\bX))_i\eqsp,\\
-&=  \sum_{i=1}^{d_{m+1}} \partial_{(h_{\theta}^m(\bX))_i}\ell_{\theta}(X,Y) \1_{i=j}\varphi_m'(z_{\theta}^{m}(\bX)_i)\eqsp,\\
-&= \partial_{(h_{\theta}^m(\bX))_j}\ell_{\theta}(X,Y) \varphi_m'(z_{\theta}^{m}(\bX)_j)\eqsp.
+\partial_{(z_{\theta}^m(X))_j}\ell_{\theta}(X,Y) &=  \sum_{i=1}^{d_{m+1}} \partial_{(h_{\theta}^m(X))_i}\ell_{\theta}(X,Y)\partial_{(z_{\theta}^m(X))_j}(h_{\theta}^m(X))_i\eqsp,\\
+&=  \sum_{i=1}^{d_{m+1}} \partial_{(h_{\theta}^m(X))_i}\ell_{\theta}(X,Y) \1_{i=j}\varphi_m'(z_{\theta}^{m}(X)_i)\eqsp,\\
+&= \partial_{(h_{\theta}^m(X))_j}\ell_{\theta}(X,Y) \varphi_m'(z_{\theta}^{m}(X)_j)\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{z_{\theta}^m(\bX)} \ell_{\theta}(\bX,Y) = \nabla_{h_{\theta}^m(\bX)}\ell_{\theta}(X,Y) \odot \varphi_m'(z_{\theta}^{m}(\bX))\eqsp.
+\nabla_{z_{\theta}^m(X)} \ell_{\theta}(X,Y) = \nabla_{h_{\theta}^m(X)}\ell_{\theta}(X,Y) \odot \varphi_m'(z_{\theta}^{m}(X))\eqsp.
 $$
-Then, for all $1\leqslant i\leqslant d_m$ and all $1\leqslant j \leqslant d_{m-1}$, and using that $z_{\theta}^m(\bX) = b^m + W^mh_{\theta}^{m-1}(\bX)$,
+Then, for all $1\leqslant i\leqslant d_m$ and all $1\leqslant j \leqslant d_{m-1}$, and using that $z_{\theta}^m(X) = b^m + W^mh_{\theta}^{m-1}(X)$,
 \begin{align*}
-\partial_{W^m_{i,j}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(\bX))_k}\ell_{\theta}(X,Y)\partial_{W^m_{i,j}}(z_{\theta}^m(\bX))_k\eqsp,\\
-&=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(\bX))_k}\ell_{\theta}(X,Y)\1_{i=k}(h_{\theta}^{m-1}(\bX))_j\eqsp,\\
-&=  \partial_{(z_{\theta}^m(\bX))_i}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(\bX))_j\eqsp.
+\partial_{W^m_{i,j}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)\partial_{W^m_{i,j}}(z_{\theta}^m(X))_k\eqsp,\\
+&=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)\1_{i=k}(h_{\theta}^{m-1}(X))_j\eqsp,\\
+&=  \partial_{(z_{\theta}^m(X))_i}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(X))_j\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{W^m} \ell_{\theta}(\bX,Y) = \nabla_{z_{\theta}^m(\bX)}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(\bX))^\top\eqsp.
+\nabla_{W^m} \ell_{\theta}(X,Y) = \nabla_{z_{\theta}^m(X)}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(X))^\top\eqsp.
 $$
-Similarly, for all $1\leqslant i\leqslant d_m$,  using that $z_{\theta}^m(\bX) = b^m + W^mh_{\theta}^{m-1}(\bX)$,
+Similarly, for all $1\leqslant i\leqslant d_m$,  using that $z_{\theta}^m(X) = b^m + W^mh_{\theta}^{m-1}(X)$,
 \begin{align*}
-\partial_{b^m_{i}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(\bX))_k}\ell_{\theta}(X,Y)\partial_{b^m_{i}}(z_{\theta}^m(\bX))_k\eqsp,\\
-&=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(\bX))_k}\ell_{\theta}(X,Y)\1_{i=k}\eqsp,\\
-&=  \partial_{(z_{\theta}^m(\bX))_k}\ell_{\theta}(X,Y)_i\eqsp.
+\partial_{b^m_{i}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)\partial_{b^m_{i}}(z_{\theta}^m(X))_k\eqsp,\\
+&=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)\1_{i=k}\eqsp,\\
+&=  \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)_i\eqsp.
 \end{align*}
 Therefore,
 $$
-\nabla_{b^m} \ell_{\theta}(\bX,Y) =  \nabla_{z_{\theta}^m(\bX)}\ell_{\theta}(X,Y)\eqsp.
+\nabla_{b^m} \ell_{\theta}(X,Y) =  \nabla_{z_{\theta}^m(X)}\ell_{\theta}(X,Y)\eqsp.
 $$
 \end{proof}
 %Each component $k$ of $z_L$ contains $\mathbb{P}(Y=k | X)$.
@@ -233,7 +236,7 @@ $$
 %
 %This models relies on more than 100.000 unknown parameters which should be estimated. As for the logistic regression and the discriminant analysis, a common choice is to minimize the negative loglikelihood of the data:
 %$$
-%\theta \mapsto -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{10} \1_{Y_i=k}\log \mathbb{P}_{\theta}(Y_i = k | \bX_i)\eqsp.
+%\theta \mapsto -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{10} \1_{Y_i=k}\log \mathbb{P}_{\theta}(Y_i = k | X_i)\eqsp.
 %$$
 %The negative loglikelihood is computed using $n = 60.000$ training samples and minimized using gradient descent algorithms. Then, the performance of the model is assessed using $10.000$ new (test) samples: the accuracy is the frequency of labels which are well predicted by the model with the estimated parameters.
 %
@@ -246,57 +249,59 @@ $$
 %\end{figure}
 
 \subsection{Regression: loss function and gradient}
-In a regression setting, it is assumed that the observations satisfy for all $1\leqslant i \leqslant n$, $Y_i = f_\star(\bX_i) + \varepsilon_i$ where the $(\varepsilon_i)_{1\leqslant i\leqslant n}$ are i.i.d. centered random variables in $\rset^M$, $X_i\in\rset^d$ and $f_{\star}$ is an unknown function.  A Feed Forward Neural Network may be used to estimate $f_\star(\bX_i)$ (i.e. $Y_i$) as follows. 
+In a regression setting, it is assumed that the observations satisfy for all $1\leqslant i \leqslant n$, $Y_i = f_\star(X_i) + \varepsilon_i$ where the $(\varepsilon_i)_{1\leqslant i\leqslant n}$ are i.i.d. centered random variables in $\rset^M$, $X_i\in\rset^d$ and $f_{\star}$ is an unknown function.  A Feed Forward Neural Network may be used to estimate $f_\star(X_i)$ (i.e. $Y_i$) as follows. 
 \begin{align*}
-h_{\theta}^0(\bX_i) &= \bX_i\eqsp,\\
-z_{\theta}^k(\bX_i)  &= b^k + W^kh_{\theta}^{k-1}(\bX_i)\quad \mathrm{for\;all\;} 1\leqslant k\leqslant L\eqsp,\\
-h_{\theta}^k(\bX_i)  &= \varphi_k(z_{\theta}^{k}(\bX_i))\quad \mathrm{for\;all\;}1\leqslant k\leqslant L\eqsp,
+h_{\theta}^0(X_i) &= X_i\eqsp,\\
+z_{\theta}^k(X_i)  &= b^k + W^kh_{\theta}^{k-1}(X_i)\quad \mathrm{for\;all\;} 1\leqslant k\leqslant L\eqsp,\\
+h_{\theta}^k(X_i)  &= \varphi_k(z_{\theta}^{k}(X_i))\quad \mathrm{for\;all\;}1\leqslant k\leqslant L\eqsp,
 \end{align*}
 where $b^1\in\rset^{d_1}$, $W^1\in\rset^{d_1\times d}$ and for all $2\leqslant k\leqslant L$, $b^k\in\rset^{d_k}$, $W^k\in\rset^{d_k\times d_{k-1}}$.  Let $\theta = \{b^1,W^1,\ldots,b^L,W^L\}$ be the unknown parameters of the MLP and $f_{\theta}(x) = h_{\theta}^L(x)$ be the output layer of the MLP. The standard approach to estimate the parameters is by minimizing the mean square error:
 $$
-\ell_n:\theta \mapsto  \frac{1}{n} \sum_{i=1}^n\left\|f_{\theta}(\bX_i) - Y_i\right\|^2\eqsp.
+\ell_n:\theta \mapsto  \frac{1}{n} \sum_{i=1}^n\left\|f_{\theta}(X_i) - Y_i\right\|^2\eqsp.
 $$
-In a regression setting, the last activation function is usually the identity function (i.e. the output is the linear transform $z_{\theta}^L(\bX_i)$). The output $h_{\theta}^L(\bX_i)= f_{\theta}(\bX_i) $ is the estimate of $Y_i$.
+In a regression setting, the last activation function is usually the identity function (i.e. the output is the linear transform $z_{\theta}^L(X_i)$). The output $h_{\theta}^L(X_i)= f_{\theta}(X_i) $ is the estimate of $Y_i$.
 
 \begin{shaded}
 \begin{proposition}[Back propagation - regression]
 \label{prop:backpropagation:classif}
-Write $\ell_{\theta}(\bX,Y) =  \left\|f_{\theta}(\bX) - Y\right\|^2$ so that 
+Write $\ell_{\theta}(X,Y) =  \left\|f_{\theta}(X) - Y\right\|_2^2$ so that 
 $$
-\ell_n:\theta \mapsto \frac{1}{n} \sum_{i=1}^n \ell_{\theta}(\bX_i,Y_i)\eqsp. 
+\ell_n:\theta \mapsto \frac{1}{n} \sum_{i=1}^n \ell_{\theta}(X_i,Y_i)\eqsp. 
 $$
 Therefore, the gradient with respect to all parameters can be computed as follows.
 \begin{align*}
-\nabla_{W^L} \ell_{\theta}(\bX,Y) &= -2(Y - f_{\theta}(\bX))(h^{L-1}_{\theta}(\bX))^\top\eqsp,\\
-\nabla_{b^L} \ell_{\theta}(\bX,Y) &=-2(Y - f_{\theta}(\bX))\eqsp.
+\nabla_{W^L} \ell_{\theta}(X,Y) &= -2(Y - f_{\theta}(X))(h^{L-1}_{\theta}(X))^\top\eqsp,\\
+\nabla_{b^L} \ell_{\theta}(X,Y) &=-2(Y - f_{\theta}(X))\eqsp.
 \end{align*}
 Then, for all $1\leqslant m\leqslant L-1$,
 \begin{align*}
-\nabla_{W^m} \ell_{\theta}(\bX,Y) &= \nabla_{z_{\theta}^m(\bX)}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(\bX))^\top\eqsp,\\
-\nabla_{b^m} \ell_{\theta}(\bX,Y) &=  \nabla_{z_{\theta}^m(\bX)}\ell_{\theta}(X,Y)\eqsp,
+\nabla_{W^m} \ell_{\theta}(X,Y) &= \nabla_{z_{\theta}^m(X)}\ell_{\theta}(X,Y)(h_{\theta}^{m-1}(X))^\top\eqsp,\\
+\nabla_{b^m} \ell_{\theta}(X,Y) &=  \nabla_{z_{\theta}^m(X)}\ell_{\theta}(X,Y)\eqsp,
 \end{align*}
-where $\nabla_{z_{\theta}^m(\bX)}$ is computed recursively as follows.
+where $\nabla_{z_{\theta}^m(X)}$ is computed recursively as follows.
 \begin{align*}
-\nabla_{h_{\theta}^m(\bX)} \ell_{\theta}(\bX,Y) &= (W^{m+1})^\top\nabla_{z_{\theta}^{m+1}(\bX)} \ell_{\theta}(\bX,Y) \eqsp,\\
-\nabla_{z_{\theta}^m(\bX)} \ell_{\theta}(\bX,Y) &= \nabla_{h_{\theta}^m(\bX)}\ell_{\theta}(X,Y) \odot \varphi_m'(z_{\theta}^{m}(\bX))\eqsp,
+\nabla_{h_{\theta}^m(X)} \ell_{\theta}(X,Y) &= (W^{m+1})^\top\nabla_{z_{\theta}^{m+1}(X)} \ell_{\theta}(X,Y) \eqsp,\\
+\nabla_{z_{\theta}^m(X)} \ell_{\theta}(X,Y) &= \nabla_{h_{\theta}^m(X)}\ell_{\theta}(X,Y) \odot \varphi_m'(z_{\theta}^{m}(X))\eqsp,
 \end{align*}
 where $\odot$ is the elementwise multiplication.
 \end{proposition}
 \end{shaded}
 \begin{proof}
-By definition, $\ell_{\theta}(\bX,Y) =  \left\|f_{\theta}(\bX) - Y\right\|^2 = \left\|b^L + W^Lh_{\theta}^{L-1}(X) - Y\right\|^2$.
+By definition, $\ell_{\theta}(X,Y) =  \left\|f_{\theta}(X) - Y\right\|_2^2 = \left\|b^L + W^Lh_{\theta}^{L-1}(X) - Y\right\|_2^2$.
 For all $1\leqslant i\leqslant M$ and $1\leqslant j\leqslant d_{L-1}$,
 $$
-\partial_{W^L_{i,j}}\ell_{\theta}(X,Y) = -2(Y_i - (f_{\theta}(\bX))_i)h^{L-1}_{\theta}(\bX)_j\eqsp,
+\partial_{W^L_{i,j}}\ell_{\theta}(X,Y) = -2(Y_i - (f_{\theta}(X))_i)h^{L-1}_{\theta}(X)_j\eqsp,
 $$
 where $Y_i$ is the $i$-th coordinate of $Y$. Therefore,
 $$
-\nabla_{W^L} \ell_{\theta}(\bX,Y) = -2(Y - f_{\theta}(\bX))(h^{L-1}_{\theta}(\bX))^\top\eqsp.
+\nabla_{W^L} \ell_{\theta}(X,Y) = -2(Y - f_{\theta}(X))(h^{L-1}_{\theta}(X))^\top\eqsp.
 $$
 Similarly, 
 $$
-\nabla_{b^L} \ell_{\theta}(\bX,Y) =-2(Y - f_{\theta}(\bX))\eqsp.
+\nabla_{b^L} \ell_{\theta}(X,Y) =-2(Y - f_{\theta}(X))\eqsp.
 $$
 The other identities are the same as in the classification setting.
 \end{proof}
+
+%\section{Stochastic optimization for neural networks}
 
