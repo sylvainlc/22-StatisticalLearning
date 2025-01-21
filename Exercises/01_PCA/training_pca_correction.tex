@@ -87,7 +87,7 @@
     First note that $\bfA\bfA^\top x=0$ implies $<\bfA^\top x,\bfA^\top x>=0$ so that $\bfA^\top x=0$. The converse is obvious. Therefore, $\mathrm{Ker}(\bfA \bfA^\top)= \mathrm{Ker}(\bfA^\top)$. And using that $\mathrm{Ker}(B^\top)=(\mathrm{Im}(B))^\perp$, we deduce that $\mathrm{Im}(\bfA \bfA^\top)^\perp=\mathrm{Im}(\bfA)^\perp$, which concludes the proof.
 }
     
-\item Let $\{U_k\}_{1\leq k \leq r}$ be a family of $r$ orthonormal vectors of $\rset^d$.
+\item Let $\{U_k\}_{1\leq k \leq r}$ be a family of $r$ orthonormal vectors of $\rset^n$.
 Show that $\sum_{k=1}^{r} U_k U_k^\top$ is the matrix associated with the orthogonal projection onto $H=\{\sum_{k=1}^r \alpha_k U_k\,; \ \alpha_1,\ldots,\alpha_r \in \rset\}$. Deduce that if $\bfA$ is a $n\times d$ matrix with real entries such that each column of $\bfA$ is in $H$, then,
 $$
 \left(\sum_{k=1}^r U_k U_k^\top\right) \bfA=\bfA\eqsp.
@@ -218,7 +218,7 @@ where $(\tilde \alpha_i)_{p+1\leqslant i\leqslant d}$ are in $[0,1]$ and such th
 %\end{enumerate}
 
 
-As the columns of $\bfU_{\star}$ are $\{\vartheta_1,\ldots,\vartheta_p\}$, for all $1\leqslant i\leqslant d$ and $1\leqslant j \leqslant p$, $b_{i,j} = \langle \vartheta_i;\vartheta_j\rangle = \delta_{i,j}$. Therefore,  for all $1\leqslant i\leqslant d$, $\sum_{j=1}^p b^2_{i,j} = 1$ and
+As the columns of $\bfU_{\star}$ are $\{\vartheta_1,\ldots,\vartheta_p\}$, for all $1\leqslant i\leqslant p$ and $1\leqslant j \leqslant p$, $b_{i,j} = \langle \vartheta_i;\vartheta_j\rangle = \delta_{i,j}$. Therefore,  for all $1\leqslant i\leqslant d$, $\sum_{j=1}^p b^2_{i,j} = 1$ and
 $$
 \mathrm{Trace}(\bfU^\top_{\star}\bfs_n \bfU_{\star}) =\sum_{i = 1}^p \lambda_i\eqsp,
 $$
