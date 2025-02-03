@@ -133,7 +133,7 @@ where $\lambda_1\geqslant \ldots\geqslant \lambda_r>0$ are the nonzero eigenvalu
 \|v_k\|^2&=\lambda_k^{-1}\langle \bfA^\top u_k;\bfA^\top u_k\rangle = \lambda_k^{-1} u^\top_k\bfA\bfA^\top u_k = 1\eqsp, \\
 \bfA^\top\bfA v_k & = \lambda_k^{-1/2}\bfA^\top \bfA \bfA^\top u_k  = \lambda_k v_k\eqsp.
 \end{align*}
-On the other hand, for all $1\leqslant k\neq j\leqslant r$, $\langle v_k;v_j\rangle = \lambda_k^{-1/2}\lambda_j^{-1/2}u^\top_k\bfA\bfA^\top u_j =\lambda_k^{-1/2}\lambda_j^{1/2}u_k'u_j = 0$. Therefore, $\{v_1,\ldots,v_r\}$ is an orthonormal family of eigenvectors of $\bfA^\top\bfA$ associated with the eigenvalues $\lambda_1\geqslant \ldots\geqslant \lambda_r>0$.
+On the other hand, for all $1\leqslant k\neq j\leqslant r$, $\langle v_k;v_j\rangle = \lambda_k^{-1/2}\lambda_j^{-1/2}u^\top_k\bfA\bfA^\top u_j =\lambda_k^{-1/2}\lambda_j^{1/2}u_k^\top u_j = 0$. Therefore, $\{v_1,\ldots,v_r\}$ is an orthonormal family of eigenvectors of $\bfA^\top\bfA$ associated with the eigenvalues $\lambda_1\geqslant \ldots\geqslant \lambda_r>0$.
 Define, for all $1\leqslant k\leqslant r$, $\sigma_k = \lambda_k^{1/2}$ which yields
 $$
 \sum_{k=1}^r \sigma_k u_k v^\top_k = \sum_{k=1}^r  u_k u^\top_k\bfA = \left(\sum_{k=1}^r  u_k u^\top_k\right)\bfA\eqsp.
@@ -202,7 +202,7 @@ $$
 $$
 Indeed, the function $f_d:(\alpha_1,\ldots,\alpha_d)\mapsto\sum_{i=1}^{d}\alpha_i\lambda_i$ is maximized under the constraints   $\alpha_i \in[0,1]$ and $\sum_{i=1}^d\alpha_i  = p$ by $(\alpha^*_i)_{1\leqslant i \leqslant d}$ such that $\alpha^*_1=\ldots=\alpha^*_p=1$. Assume that $(\alpha_1,\ldots,\alpha_d)$ is such that there exists $1\leqslant j_0\leqslant p$ such that $\alpha_{j_0}<1$. Then, $\sum_{j=p+1}^d\alpha_j \geqslant 1 - \alpha_{j_0}$ and we may write, as $\lambda_{j_0}\geqslant \lambda_{p+1}\geqslant \ldots\geqslant \lambda_d$,
 $$
-f_d:(\alpha_1,\ldots,\alpha_d) \leqslant \sum_{i=1, i\neq j_0}^{p}\alpha_i\lambda_i + \lambda_{j_0} + \sum_{i=p+1}^{d}\tilde \alpha_i\lambda_i \eqsp,
+f_d(\alpha_1,\ldots,\alpha_d) \leqslant \sum_{i=1, i\neq j_0}^{p}\alpha_i\lambda_i + \lambda_{j_0} + \sum_{i=p+1}^{d}\tilde \alpha_i\lambda_i \eqsp,
 $$
 where $(\tilde \alpha_i)_{p+1\leqslant i\leqslant d}$ are in $[0,1]$ and such that $ \sum_{i=1, i\neq j_0}^{p}\alpha_i + 1 +  \sum_{i=p+1}^{d}\tilde\alpha_i = p$.
 %there exists $p+1\leqslant j_0\leqslant d$ such that $\alpha_{k_0}>0$. Then,
@@ -218,13 +218,13 @@ where $(\tilde \alpha_i)_{p+1\leqslant i\leqslant d}$ are in $[0,1]$ and such th
 %\end{enumerate}
 
 
-As the columns of $\bfU_{\star}$ are $\{\vartheta_1,\ldots,\vartheta_p\}$, for all $1\leqslant i\leqslant p$ and $1\leqslant j \leqslant p$, $b_{i,j} = \langle \vartheta_i;\vartheta_j\rangle = \delta_{i,j}$. Therefore,  for all $1\leqslant i\leqslant d$, $\sum_{j=1}^p b^2_{i,j} = 1$ and
+As the columns of $\bfU_{\star}$ are $\{\vartheta_1,\ldots,\vartheta_p\}$, for all $1\leqslant i\leqslant d$ and $1\leqslant j \leqslant p$, $b_{i,j} = \langle \vartheta_i;\vartheta_j\rangle = \delta_{i,j}$. Therefore, for all $1\leqslant i\leqslant p$, $\sum_{j=1}^p b^2_{i,j} = 1$, for all $p < i$, $\sum_{j=1}^p b^2_{i,j} = 0$ and
 $$
 \mathrm{Trace}(\bfU^\top_{\star}\bfs_n \bfU_{\star}) =\sum_{i = 1}^p \lambda_i\eqsp,
 $$
 which completes the proof.
 }
-\item  For any dimension $1\leqslant p \leqslant  d$, let $\calF_d^p$ be the set of all vector subpaces of $\rset^d$ with dimension $p$. Consider the linear span $V_d$ defined as
+\item  For any dimension $1\leqslant p \leqslant  d$, let $\calF_d^p$ be the set of all vector subspaces of $\rset^d$ with dimension $p$. Consider the linear span $V_d$ defined as
 $$
 V_p \in \underset{V\in \calF_d^p}{\mathrm{argmin}} \;\sum_{i=1}^n\|X_i - \pi_V(X_i)\|_2^2\eqsp,
 $$
