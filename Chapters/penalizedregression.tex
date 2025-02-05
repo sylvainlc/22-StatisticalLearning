@@ -180,7 +180,7 @@ Cross-validation can be performed using Scikit-learn and its ridge regression wi
 \For{$k\in\{1,\ldots,K\}$}
     \State Compute
 $$
-\widehat \param^{\mathrm{ridge}}_{n,k,\lambda_j} = \frac{1}{n-n_k}\left(\frac{1}{n-n_k}\bf{Y}_{-k}^\top \bf{Y}_{-k} + \lambda \Id_d\right)^{-1}\bf{Y}_{-k}^\top \bf{Y}_{-k}\eqsp.
+\widehat \param^{\mathrm{ridge}}_{n,k,\lambda_j} = \frac{1}{n-n_k}\left(\frac{1}{n-n_k}\bf{X}_{-k}^\top \bf{X}_{-k} + \lambda \Id_d\right)^{-1}\bf{X}_{-k}^\top \bf{Y}_{-k}\eqsp.
 $$
     \State Compute
 $$

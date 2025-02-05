@@ -133,7 +133,7 @@ In addition,
 \begin{remark}
 If we assume that  for all $1\leqslant i \leqslant n$, $Y_i = X^\top_i \param_{\star} + \varepsilon_i$ for some unknown $\param_\star\in\rset^d$ where the $(\varepsilon_i)_{1\leqslant i\leqslant n}$ are i.i.d. random variables in $\rset$ with distribution $\mathcal{N}(0,\sigma_*^2)$, $\widehat \param_n$ is the maximum likelihood estimator of $\param_\star$. The loglikelihood of the observations writes, for all $\param\in\paramset$,
 $$
-\log p_\theta(Y_{1:n}) = \sum_{i=1}^{n}\log p_\theta(Y_{i}) =  \sum_{i=1}^{n}\left\{- \frac{1}{2}\log(2\pi \sigma_\star^2) - \frac{1}{2}\left(Y_i - \param^\top X_i\right)^2\right\}\eqsp.
+\log p_\theta(Y_{1:n}) = \sum_{i=1}^{n}\log p_\theta(Y_{i}) =  \sum_{i=1}^{n}\left\{- \frac{1}{2}\log(2\pi \sigma_\star^2) - \frac{1}{2\sigma_\star^2}\left(Y_i - \param^\top X_i\right)^2\right\}\eqsp.
 $$
 Therefore, maximizing $\param\mapsto \log p_\theta(Y_{1:n})$ amounts to minimizing $\param \mapsto \sum_{i=1}^{n}(Y_i - \param^\top X_i)^2 = \|Y - X\param\|_2^2$.
 \end{remark}
