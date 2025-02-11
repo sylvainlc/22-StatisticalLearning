@@ -180,11 +180,11 @@ Cross-validation can be performed using Scikit-learn and its ridge regression wi
 \For{$k\in\{1,\ldots,K\}$}
     \State Compute
 $$
-\widehat \param^{\mathrm{ridge}}_{n,k,\lambda_j} = \frac{1}{n-n_k}\left(\frac{1}{n-n_k}\bf{X}_{-k}^\top \bf{X}_{-k} + \lambda_j \Id_d\right)^{-1}\bf{X}_{-k}^\top \bf{Y}_{-k}\eqsp.
+\widehat \param^{\mathrm{ridge}}_{n-n_k,k,\lambda_j} = \frac{1}{n-n_k}\left(\frac{1}{n-n_k}\bf{X}_{-k}^\top \bf{X}_{-k} + \lambda_j \Id_d\right)^{-1}\bf{X}_{-k}^\top \bf{Y}_{-k}\eqsp.
 $$
     \State Compute
 $$
-\mathcal{L}_k(\lambda_j) = \left\|\bf{Y}_k - \bf{X}_k \widehat \param^{\mathrm{ridge}}_{n,k,\lambda_j}\right\|_2^2\eqsp.
+\mathcal{L}_k(\lambda_j) = \left\|\bf{Y}_k - \bf{X}_k \widehat \param^{\mathrm{ridge}}_{n-n_k,k,\lambda_j}\right\|_2^2\eqsp.
 $$ 
 \EndFor
 \State Set
@@ -194,7 +194,7 @@ $$
 \EndFor
 \State Set
 $$
-\widehat \lambda = \mathrm{Argmin}_{\lambda_1,\ldots\lambda_p}\overline{\mathcal{L}}(\lambda)\eqsp.
+\widehat \lambda = \mathrm{Argmin}_{\lambda\in\{\lambda_1,\ldots\lambda_p\}}\overline{\mathcal{L}}(\lambda)\eqsp.
 $$
 \end{algorithmic}
 \end{algorithm}
@@ -288,13 +288,13 @@ Then,
 \]
 Consequently, for all $\param_j \neq 0$, 
 \[
-(\nabla_\param ( n^{-1}\|Y - X\param\|_2^2 +  \lambda\|\param\|_1))_j= \frac{2}{n}( \param_j - \upsilon_j + \lambda n\textrm{sign}(\param_j)/2)\eqsp.
+(\nabla_\param ( n^{-1}\|Y - X\param\|_2^2 +  \lambda\|\param\|_1))_j= \frac{2}{n}( \param_j - \upsilon_j + \lambda n\cdot\textrm{sign}(\param_j)/2)\eqsp.
 \]
 For all $1\leqslant j\leqslant d$,  $\param_j \mapsto  n^{-1}\|Y - X\param\|_2^2 + \lambda\|\param\|_1$ is convex and grows to infinity when $|\param_j|\to \infty$ and admits thus a minimum at some $\param_j^{\star}\in\rset$. 
 \begin{enumerate}[-]
 \item If $\param_j^{\star} \neq 0$, then
 \[
-\param_j^{\star} = \upsilon_j\left( 1 - \frac{\lambda n~\textrm{sign}(\param_j^{\star})}{2 \upsilon_j}\right)\eqsp,
+\param_j^{\star} = \upsilon_j\left( 1 - \frac{\lambda n\cdot\textrm{sign}(\param_j^{\star})}{2 \upsilon_j}\right)\eqsp,
 \]
 which yields, as  $\textrm{sign}(\param_j^{\star}) = \textrm{sign}(\upsilon_j)$,
 \[
@@ -339,13 +339,13 @@ Then,
 \]
 Consequently, for all $\param_j \neq 0$, 
 \[
-(\nabla_\param ( n^{-1}\|Y - X\param\|_2^2 +  \lambda\|\param\|_1))_j= \frac{2}{n}( \param_j - \upsilon_j + \lambda n\textrm{sign}(\param_j)/2)\eqsp.
+(\nabla_\param ( n^{-1}\|Y - X\param\|_2^2 +  \lambda\|\param\|_1))_j= \frac{2}{n}( \param_j - \upsilon_j + \lambda n\cdot\textrm{sign}(\param_j)/2)\eqsp.
 \]
 For all $1\leqslant j\leqslant d$,  $\param_j \mapsto  n^{-1}\|Y - X\param\|_2^2 + \lambda\|\param\|_1$ is convex and grows to infinity when $|\param_j|\to \infty$ and admits thus a minimum at some $\param_j^{\star}\in\rset$. 
 \begin{enumerate}[-]
 \item If $\param_j^{\star} \neq 0$, then
 \[
-\param_j^{\star} = \upsilon_j\left( 1 - \frac{\lambda n~\textrm{sign}(\param_j^{\star})}{2 \upsilon_j}\right)\eqsp,
+\param_j^{\star} = \upsilon_j\left( 1 - \frac{\lambda n\cdot\textrm{sign}(\param_j^{\star})}{2 \upsilon_j}\right)\eqsp,
 \]
 which yields, as  $\textrm{sign}(\param_j^{\star}) = \textrm{sign}(\upsilon_j)$,
 \[
