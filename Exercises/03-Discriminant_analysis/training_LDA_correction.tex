@@ -161,10 +161,11 @@ and
 \begin{align*}
 \mathbb{V}[Z] = \mathbb{V} \Big[ (\mu_1 - \mu_0)^\top \Sigma^{-1} X \Big] = \Big( (\mu_1 - \mu_0)^\top \Sigma^{-1}\Big) \Sigma \left( \Sigma^{-1} (\mu_1 - \mu_0)\right) = \delta^2\eqsp.
 \end{align*}
-Hence, 
+Hence,
 \begin{align*}
-\bP (h_*(X) = 1 | Y = 0) = \bP \Big( - \frac{\delta^2}{2} + \delta \varepsilon >0 \Big)= \bP\Big(\varepsilon > \frac{\delta}{2}\Big) = \Phi \Big(-\frac{\delta}{2}\Big).
+\bP (h_*(X) = 1 | Y = 0) = \bP \Big( - \frac{\delta^2}{2} + \delta \varepsilon >0 \Big)= \bP\Big(\varepsilon > \frac{\delta}{2}\Big) = \Phi \Big(-\frac{\delta}{2}\Big),
 \end{align*}
+where $\varepsilon$ is a centered Gaussian random variable with unit variance.
 }
 \item Assume now that $\Sigma_{1}\neq \Sigma_{0}$. What is the nature of the frontier between $\{x\eqsp;\eqsp h_{*}(x)=1\}$ and $\{x\eqsp;\eqsp h_{*}(x)=0\}$?
 
@@ -176,7 +177,7 @@ In this case, for all $x\in\rset^d$,
  \pi_1 g_1(x) &> \pi_0 g_0(x) \\
 &\Leftrightarrow  \log(\pi_1 g_1(x)) > \log(\pi_0 g_0(x))\eqsp,\\
 &\Leftrightarrow  -{1\over 2}(x-\mu_1)^\top\Sigma_1^{-1}(x-\mu_1) + {1\over 2}(x-\mu_0)^\top\Sigma_0^{-1}(x-\mu_0) > \log(\pi_0/ \pi_1)\eqsp,\\
-&\Leftrightarrow	\frac{1}{2}x^\top\Sigma_0^{-1}x  -\frac{1}{2}x^\top\Sigma_1^{-1}x +	 x^\top\Sigma_1^{-1}\mu_1 - x^\top\Sigma_0^{-1}\mu_0 - \frac{1}{2} \mu_1^\top\Sigma^{-1}\mu_1 + \frac{1}{2} \mu_0^\top\Sigma^{-1}\mu_0  > \log(\pi_0/ \pi_1)\eqsp.
+&\Leftrightarrow	\frac{1}{2}x^\top\Sigma_0^{-1}x  -\frac{1}{2}x^\top\Sigma_1^{-1}x +	 x^\top\Sigma_1^{-1}\mu_1 - x^\top\Sigma_0^{-1}\mu_0 - \frac{1}{2} \mu_1^\top\Sigma^{-1}_1\mu_1 + \frac{1}{2} \mu_0^\top\Sigma^{-1}_0\mu_0  > \log(\pi_0/ \pi_1)\eqsp.
 \end{align*}
 As the quadratic term does not vanish anymore, the frontier between $\{x\eqsp;\eqsp h_{*}(x)=1\}$ and $\{x\eqsp;\eqsp h_{*}(x)=0\}$ is a quadric.
 }
