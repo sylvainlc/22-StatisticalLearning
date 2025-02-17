@@ -76,7 +76,7 @@
 \medskip
 
 
-\section*{Warm-up}
+\section{Warm-up}
 
 \begin{enumerate}
 \item Let $\bfA$ be a $n\times d$ matrix with real entries. Show that $\mathrm{Im}(\bfA)=\mathrm{Im}(\bfA \bfA^\top)$.
@@ -87,8 +87,8 @@ $$
 $$
 \end{enumerate}
 
-\section*{Kernel Principal Component Analysis}
-\subsection*{Principal Component Analysis}
+\section{Kernel Principal Component Analysis}
+\subsection{Principal Component Analysis}
  Let $(X_i)_{1\leqslant i\leqslant n}$ be i.i.d. random variables in $\rset^d$ and consider the matrix $\bfX\in\rset^{n\times d}$ such that the $i$-th row of $\bfX$ is the observation $X^\top_i$. In this exercise, it is assumed that data are preprocessed so that the columns of $\bfX$ are centered.  This means that for all $1\leqslant k \leqslant d$, $\sum_{i=1}^{n}X_{i,k} = 0$. Let $\bfs_n$ be the empirical covariance matrix:
 $$
 \bfs_n = n^{-1}\sum_{i=1}^n X_i X^\top_i\eqsp.
@@ -170,7 +170,7 @@ where for all $1\leqslant k \leqslant d$, the $k$-th principal component is defi
 \end{enumerate}
 
 
-\subsection*{Application to RKHS}
+\subsection{Application to RKHS}
 Let $(X_i)_{1\le i \le n}$ be $n$ observations in a general space $\X$ and $k: \X\times \X \to \rset$ a positive function. We assume that $k$ is symmetric and that for all $n\geqslant 1$, $(a_i)_{1\leqslant i \leqslant n}\in\rset^n$ and $(x_i)_{1\leqslant i \leqslant n}\in\X^n$, $\sum_{1\leqslant i,j \leqslant n}a_ia_j k(x_i,x_j)\geqslant 0$.  For all $x\in\X$, $\phi(x)$ denotes the function $\phi(x): y\to k(x,y)$.
 
 Let $\W$ be a Hilbert space of real-valued functions defined on $\X$, endowed with an inner product denoted by $\langle \cdot,\cdot \rangle_{\W}$, and such that for all $x\in\X$, $\phi(x)\in\W$ and for all $f\in \W$ and all $x\in\X$, $f(x) = \langle f,\phi(x) \rangle_{\W}$. The aim is now to perform a PCA on $(\phi(X_1),\ldots,\phi(X_n))$. It is assumed that $\sum_{i=1}^n \phi(X_i) = 0$. Define
