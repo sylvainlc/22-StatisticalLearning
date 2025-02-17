@@ -172,7 +172,7 @@ For all classifiers $h$, writing $\eta(X) = \bP(Y=1|X)$,
 &= \bE[2\omega_1 \mathds{1}_{Y=1}\mathds{1}_{h(X)=0} + 2\omega_0 \mathds{1}_{Y=0}\mathds{1}_{h(X)=1}]\eqsp,\\ 
 &= \bE[2\omega_1 \eta(X)\mathds{1}_{h(X)=0} + 2\omega_0 (1-\eta(X))\mathds{1}_{h(X)=1}]\eqsp,\\ 
 \end{align*}
-Therefore, choosing $h_\star:x\mapsto \mathds{1}_{\omega_1 \eta(X)\geqslant \omega_0 (1-\eta(X))}$ yields,
+Therefore, choosing $h_\star:x\mapsto \mathds{1}_{\omega_1 \eta(x)\geqslant \omega_0 (1-\eta(x))}$ yields,
 $$
 \mathsf{R}(h) \geqslant \mathsf{R}(h_*)\eqsp. 
 $$
@@ -201,7 +201,7 @@ $$
 $$
 The classifier $h_*$ defined by:
 $$
-h_{*}(x)={\rm sign}(\eta(x)-1/2)\eqsp,
+h_{*}(x)=  \mathds{1}_{\eta(x) \geqslant \frac{1}{2}} % {\rm sign}(\eta(x)-1/2)\eqsp,
 $$
 where
 $$
