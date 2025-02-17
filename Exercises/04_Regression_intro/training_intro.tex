@@ -76,7 +76,7 @@
 \medskip
 
 
-\section*{Gaussian vectors}
+\section{Gaussian vectors}
 \begin{enumerate}
 \item Let $\Sigma$ be a symmetric positive definite matrix of $\rset^{n\times n}$. Provide a solution to sample a Gaussian vector with covariance matrix $\Sigma$ based on i.i.d. standard Gaussian variables.
 
@@ -128,12 +128,12 @@ are independent.
 \end{enumerate}
 
 
-\section*{Regression: prediction of a new observation}
+\section{Regression: prediction of a new observation}
 Consider the regression model given by
 $$
 Y = X\beta_{\star}+ \xi\eqsp,
 $$
-where $X\in\rset^{n\times d}$ the $(\xi_{i})_{1\leqslant i \leqslant n}$ are i.i.d. centered Gaussian random variables with variance $\sigma_{\star}^2$. Assume that $X^\top X$ has full rank and that $\beta_\star$ and $\sigma_{\star}^2$ are estimated by 
+where $X\in\rset^{n\times d}$ the $(\xi_{i})_{1\leqslant i \leqslant n}$ are i.i.d.\ centered Gaussian random variables with variance $\sigma_{\star}^2$. Assume that $X^\top X$ has full rank and that $\beta_\star$ and $\sigma_{\star}^2$ are estimated by 
 $$
 \widehat \beta_n = (X^\top X)^{-1}X^\top Y\quad\mathrm{and}\quad \widehat \sigma^2_n =\frac{\|Y - X\widehat \beta_n \|^2}{n-d}\eqsp.
 $$
@@ -162,7 +162,7 @@ Let $x_\star \in\rset^d$ and assume that its associated observation $Y_\star = x
 %$$
 %}
 
-\item  Provide a confidence interval for $x_\star^\top\beta_\star$ with statistical significiance $1-\alpha$ for $\alpha\in(0,1)$.
+\item  Provide a confidence interval for $x_\star^\top\beta_\star$ with statistical significance $1-\alpha$ for $\alpha\in(0,1)$.
 
 %\vspace{.2cm}
 %
@@ -179,7 +179,7 @@ Let $x_\star \in\rset^d$ and assume that its associated observation $Y_\star = x
 \end{enumerate}
 
 
-\section*{Regression: linear estimators}
+\section{Regression: linear estimators}
 Consider the regression model given, for all $1\leqslant i\leqslant n$, by
 $$
 Y_{i}=f^*(X_{i})+\xi_{i}\eqsp,
