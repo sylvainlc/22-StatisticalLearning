@@ -115,7 +115,7 @@ In addition,
 \[
 \sigma_\star^{-1}\widehat\sigma_{n} = \sqrt{\sigma_\star^{-2}\widehat\sigma^2_{n}} = \sqrt{\|\sigma_\star^{-1}(I_n - X(X^\top X)^{-1}X^\top)\varepsilon\|_2^2/(n-d)}\eqsp,
 \]
-where $\sigma_\star^{-2}\widehat\sigma^2_{n} = \|\sigma_\star^{-1}(I_n - X(X^\top X)^{-1}X^\top)\varepsilon\|_2^2 \sim \chi^2(n-d)$. The proof is concluded by noting that $\widehat \param_n$ and  $\widehat\sigma^2_{n}$ are independent.
+where $(n-d) \sigma_\star^{-2}\widehat\sigma^2_{n} = \|\sigma_\star^{-1}(I_n - X(X^\top X)^{-1}X^\top)\varepsilon\|_2^2 \sim \chi^2(n-d)$. The proof is concluded by noting that $\widehat \param_n$ and  $\widehat\sigma^2_{n}$ are independent.
 }
 \item Provide a confidence interval with confidence level $1-\alpha$ for $\param_{\star,j}$.
 
@@ -128,7 +128,7 @@ For $\alpha\in(0,1)$, if $s_{1-\alpha/2}^{n-d}$ denotes the quantile of order $1
 \]
 Therefore, 
 \[
-I^{n-p}_{n,j}(\param_{\star}) = \left[\widehat \param_{n,j} -\widehat\sigma_{n}s_{1-\alpha/2}^{n-d}\sqrt{(X^\top X)_{j,j}^{-1}}\eqsp;\eqsp \widehat \param_{n,j} + \widehat\sigma_{n}s_{1-\alpha/2}^{n-d}\sqrt{(X^\top X)_{j,j}^{-1}}\right]
+I^{n-d}_{n,j}(\param_{\star}) = \left[\widehat \param_{n,j} -\widehat\sigma_{n}s_{1-\alpha/2}^{n-d}\sqrt{(X^\top X)_{j,j}^{-1}}\eqsp;\eqsp \widehat \param_{n,j} + \widehat\sigma_{n}s_{1-\alpha/2}^{n-d}\sqrt{(X^\top X)_{j,j}^{-1}}\right]
 \]
  is a confidence interval for $\param_{\star,j}$ with confidence level $1-\alpha$. 
 }
@@ -138,19 +138,19 @@ Consider the regression model given by
 $$
 Y = X\param_{\star}+ \varepsilon\eqsp,
 $$
-where $X\in\rset^{n\times d}$ the $(\varepsilon_{i})_{1\leqslant i \leqslant n}$ are i.i.d. centered Gaussian random variables with variance $\sigma_{\star}^2$ and independent of $(X_{i})_{1\leqslant i \leqslant n}$ which are assumed to be random. Assume that $X^\top X$ has full rank and that $\param_\star$ is estimated by 
+where $X\in\rset^{n\times d}$, the $(\varepsilon_{i})_{1\leqslant i \leqslant n}$ are i.i.d. centered Gaussian random variables with variance $\sigma_{\star}^2$ and independent of $(X_{i})_{1\leqslant i \leqslant n}$ which are assumed to be random. Assume that $X^\top X$ has full rank and that $\param_\star$ is estimated by 
 $$
 \widehat \param_n = (X^\top X)^{-1}X^\top Y\eqsp.
 $$
 \begin{enumerate}
-\item  Compute the excess risk $\mathsf{R}(\param)-\mathsf{R}(\param_\star)$, where $\mathsf{R}(\param) = n^{-1}\bE[\|Y - X^\top \param\|_2^2]$.
+\item  Compute the excess risk $\mathsf{R}(\param)-\mathsf{R}(\param_\star)$, where $\mathsf{R}(\param) = n^{-1}\bE[\|Y - X \param\|_2^2]$.
 
 \vspace{.2cm}
 
 {\em
 By definition, using that $\bE[\varepsilon]=0$,
 \begin{align*}
-\mathsf{R}(\param) = n^{-1}\bE[\|Y - X \param\|_2^2] = n^{-1}\mathsf{R}(\param) &= \bE[\|X\param_\star + \varepsilon - X\param\|_2^2]\eqsp,\\
+\mathsf{R}(\param) = n^{-1}\bE[\|Y - X \param\|_2^2] &= n^{-1}\bE[\|X\param_\star + \varepsilon - X\param\|_2^2]\eqsp,\\
 &= n^{-1}\bE[\|X \param_\star - X\param\|_2^2] + n^{-1}\bE[\|\varepsilon\|_2^2]\eqsp,\\
 &=(\param_\star - \param)^\top n^{-1}\bE[X^\top X](\param_\star - \param) + \sigma_\star^2\eqsp.
 \end{align*}
