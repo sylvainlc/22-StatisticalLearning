@@ -86,7 +86,7 @@ Define the generalized Ridge estimator by:
 $$
 \widehat{\beta} \in \mathrm{Argmin}_{\beta\in \mathbb{R}^{d}} \left\{(Y -X\beta)^\top W (Y-X\beta) + (\beta-\beta_0)^\top \Delta (\beta-\beta_0)\right\}\,,
 $$
-where $\beta_0 \in \mathbb{R}^{d}$, $W\in\rset^{n\times n}$ is a diagonal matrix with elements in $[0,1]$, $\Delta\in\rset^{d\times d}$ is a definite-positive matrix.
+where $\beta_0 \in \mathbb{R}^{d}$, $W\in\rset^{n\times n}$ is a diagonal matrix with elements in $[0,1]$, $\Delta\in\rset^{d\times d}$ is a symmetric definite-positive matrix.
 \begin{enumerate}
 \item Provide the expression of $\widehat \beta$ when $\beta_0 = 0$, $W = I_n$ and $\Delta = \lambda I_d$ where $\lambda>0$.
 \item Solve the optimization problem in the general case.
