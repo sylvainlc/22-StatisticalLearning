@@ -73,32 +73,32 @@
 \section{Warm-up}
 Consider a model given by 
 $$
-Y = X\theta_* + \varepsilon\,,
+Y = X\theta_\star + \varepsilon\,,
 $$
-where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_*^2I_n)$. The Ridge estimator  is defined for all $\lambda>0$ by:
+where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_\star^2I_n)$. The Ridge estimator  is defined for all $\lambda>0$ by:
 $$
-\widehat{\theta}_{\lambda}\in\mathrm{Argmin}_{\theta\in\mathbb{R}^d} \mathcal{L}(\theta)\quad\mathrm{with} \quad \mathcal{L}(\theta) = \|Y-X\theta\|_2^2 + \lambda \|\theta\|_2^2\,.
+\widehat{\theta}_{\lambda}\in\mathrm{Argmin}_{\theta\in\mathbb{R}^d} \mathcal{L}(\theta)\quad\mathrm{with} \quad \mathcal{L}(\theta) = \frac{1}{n} \|Y-X\theta\|_2^2 + \lambda \|\theta\|_2^2\,.
  $$
 For all $\lambda>0$, the excess risk is given by
 \begin{multline*}
-\bE\left[\mathsf{R}(\widehat \param^{\mathrm{ridge}}_{n,\lambda}) - \mathsf{R}(\param_\star)\right] = \lambda^2\param_\star^\top\left(\frac{1}{n}X^\top X + \lambda I_d\right)^{-2} \frac{1}{n}X^\top X \param_\star \\
+\bE\left[\mathsf{R}(\widehat \param_\lambda) - \mathsf{R}(\param_\star)\right] = \lambda^2\param_\star^\top\left(\frac{1}{n}X^\top X + \lambda I_d\right)^{-2} \frac{1}{n}X^\top X \param_\star \\
 +\frac{\sigma_\star^{2}}{n}\mathrm{Trace}\left((n^{-1}X^\top X)^2(n^{-1}X^\top X + \lambda I_d)^{-2}\right)\eqsp.
 \end{multline*}
 
 \begin{enumerate}
 \item Prove that 
 $$
-\bE\left[\mathsf{R}(\widehat \param^{\mathrm{ridge}}_n) - \mathsf{R}(\param_\star)\right]  \leqslant \frac{\lambda}{2}\|\param_\star\|_2^2 + \frac{\sigma_\star^{2}}{2n\lambda}\mathrm{Trace}\left(n^{-1}X^\top X\right)\eqsp.
+\bE\left[\mathsf{R}(\widehat \param_\lambda) - \mathsf{R}(\param_\star)\right]  \leqslant \frac{\lambda}{2}\|\param_\star\|_2^2 + \frac{\sigma_\star^{2}}{2n^2\lambda}\mathrm{Trace}\left(X^\top X\right)\eqsp.
 $$
-\item Propose an "optimal" value for $\lambda$ and  compute the associated excess risk.
+\item Propose an "optimal" value for $\lambda$ and  compute the associated excess risk upper bound.
 \end{enumerate}
 
 \section{Elastic-Net}
 Consider a model given by 
 $$
-Y = X\theta_* + \varepsilon\,,
+Y = X\theta_\star + \varepsilon\,,
 $$
-where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_*^2I_n)$. The Elastic-Net estimator involves both $\mathrm{L}^1$ and $\mathrm{L}^2$ penalties. It is defined for all $\lambda,\mu>0$ by:
+where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_\star^2I_n)$. The Elastic-Net estimator involves both $\mathrm{L}^1$ and $\mathrm{L}^2$ penalties. It is defined for all $\lambda,\mu>0$ by:
 $$
 \widehat{\theta}_{\lambda,\mu}\in\mathrm{Argmin}_{\theta\in\mathbb{R}^d} \mathcal{L}(\theta)\quad\mathrm{with} \quad \mathcal{L}(\theta) = \|Y-X\theta\|_2^2 + \lambda \|\theta\|_2^2 + \mu \|\theta\|_1\,.
  $$
@@ -106,7 +106,7 @@ In the following, we assume that for all $1\leq j\leq d$, the $j$-th column of $
 \begin{enumerate}
 \item For all $1\leq j \leq d$ provide the partial derivative of $\mathcal{L}$ with respect to $\theta_j$ for $\theta_j\neq 0$. 
 \item Provide an expression of the answer of the first question with $R_j(\theta) = \mathbf{X}_j^\top(Y - \sum_{k\neq j}\theta_k\mathbf{X}_k)$.
-\item Assume that $\theta_k$, $1\leq k\neq j \leq d$ are fixed and assume that the minimum of $\theta_j \mapsto \mathcal{L}(\theta)$ is reached at a $\theta_j\neq 0$. Prove that the sign of $\theta_j$ is the same as the signe of $R_j$ and conclude.
+\item Assume that $\theta_k$, $1\leq k\neq j \leq d$ are fixed and assume that the minimum of $\theta_j \mapsto \mathcal{L}(\theta)$ is reached at a $\theta^\star_j\neq 0$. Prove that the sign of $\theta^\star_j$ is the same as the sign of $R_j$ and conclude.
 \item Provide an algorithm to obtain an approximation of $\widehat{\theta}_{\lambda,\mu}$.
 \end{enumerate}
 

@@ -73,22 +73,22 @@
 \section{Warm-up}
 Consider a model given by 
 $$
-Y = X\theta_* + \varepsilon\,,
+Y = X\theta_\star + \varepsilon\,,
 $$
-where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_*^2I_n)$. The Ridge estimator  is defined for all $\lambda>0$ by:
+where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_\star^2I_n)$. The Ridge estimator  is defined for all $\lambda>0$ by:
 $$
-\widehat{\theta}_{\lambda}\in\mathrm{Argmin}_{\theta\in\mathbb{R}^d} \mathcal{L}(\theta)\quad\mathrm{with} \quad \mathcal{L}(\theta) = \|Y-X\theta\|_2^2 + \lambda \|\theta\|_2^2\,.
+\widehat{\theta}_{\lambda}\in\mathrm{Argmin}_{\theta\in\mathbb{R}^d} \mathcal{L}(\theta)\quad\mathrm{with} \quad \mathcal{L}(\theta) = \frac{1}{n} \|Y-X\theta\|_2^2 + \lambda \|\theta\|_2^2\,.
  $$
 For all $\lambda>0$, the excess risk is given by
 \begin{multline*}
-\bE\left[\mathsf{R}(\widehat \param^{\mathrm{ridge}}_{n,\lambda}) - \mathsf{R}(\param_\star)\right] = \lambda^2\param_\star^\top\left(\frac{1}{n}X^\top X + \lambda I_d\right)^{-2} \frac{1}{n}X^\top X \param_\star \\
+\bE\left[\mathsf{R}(\widehat \param_\lambda) - \mathsf{R}(\param_\star)\right] = \lambda^2\param_\star^\top\left(\frac{1}{n}X^\top X + \lambda I_d\right)^{-2} \frac{1}{n}X^\top X \param_\star \\
 +\frac{\sigma_\star^{2}}{n}\mathrm{Trace}\left((n^{-1}X^\top X)^2(n^{-1}X^\top X + \lambda I_d)^{-2}\right)\eqsp.
 \end{multline*}
 
 \begin{enumerate}
 \item Prove that 
 $$
-\bE\left[\mathsf{R}(\widehat \param^{\mathrm{ridge}}_n) - \mathsf{R}(\param_\star)\right]  \leqslant \frac{\lambda}{2}\|\param_\star\|_2^2 + \frac{\sigma_\star^{2}}{2n\lambda}\mathrm{Trace}\left(n^{-1}X^\top X\right)\eqsp.
+\bE\left[\mathsf{R}(\widehat \param_\lambda) - \mathsf{R}(\param_\star)\right]  \leqslant \frac{\lambda}{2}\|\param_\star\|_2^2 + \frac{\sigma_\star^{2}}{2n^2\lambda}\mathrm{Trace}\left(X^\top X\right)\eqsp.
 $$
 
 \vspace{.2cm}
@@ -97,7 +97,7 @@ $$
 Proof in  lecture notes.
 }
 
-\item Propose an "optimal" value for $\lambda$ and  compute the associated excess risk.
+\item Propose an "optimal" value for $\lambda$ and  compute the associated excess risk upper bound.
 
 \vspace{.2cm}
 
@@ -109,9 +109,9 @@ Proof in  lecture notes.
 \section{Elastic-Net}
 Consider a model given by 
 $$
-Y = X\theta_* + \varepsilon\,,
+Y = X\theta_\star + \varepsilon\,,
 $$
-where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_*^2I_n)$. The Elastic-Net estimator involves both $\mathrm{L}^1$ and $\mathrm{L}^2$ penalties. It is defined for all $\lambda,\mu>0$ by:
+where $X\in\mathbb{R}^{n\times d}$ and $\varepsilon \sim \mathcal{N}(0,\sigma_\star^2I_n)$. The Elastic-Net estimator involves both $\mathrm{L}^1$ and $\mathrm{L}^2$ penalties. It is defined for all $\lambda,\mu>0$ by:
 $$
 \widehat{\theta}_{\lambda,\mu}\in\mathrm{Argmin}_{\theta\in\mathbb{R}^d} \mathcal{L}(\theta)\quad\mathrm{with} \quad \mathcal{L}(\theta) = \|Y-X\theta\|_2^2 + \lambda \|\theta\|_2^2 + \mu \|\theta\|_1\,.
  $$
@@ -142,18 +142,18 @@ Since $\|\mathbf{X}_j\|_2 = 1$, for $1\leq j \leq d$ such that $\theta_j\neq 0$,
 &= 2\left((1+\lambda)\theta_j -R_j(\theta) + \frac{\mu}{2} \mathrm{sign}(\theta_j)\right)\eqsp.
 \end{align*}
 }
-\item Assume that $\theta_k$, $1\leq k\neq j \leq d$ are fixed and assume that the minimum of $\theta_j \mapsto \mathcal{L}(\theta)$ is reached at a $\theta_j\neq 0$. Prove that the sign of $\theta_j$ is the same as the signe of $R_j$ and conclude.
+\item Assume that $\theta_k$, $1\leq k\neq j \leq d$ are fixed and assume that the minimum of $\theta_j \mapsto \mathcal{L}(\theta)$ is reached at a $\theta^\star_j\neq 0$. Prove that the sign of $\theta^\star_j$ is the same as the signe of $R_j$ and conclude.
 
 \vspace{.2cm}
 
 {\em
-If the minimum of $\theta_j \mapsto \mathcal{L}(\theta)$ is reached at some $\theta^*_j\neq 0$ it means that $\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^*_j,\theta_{j+1},\ldots,\theta_d)) = 0$. Since
+If the minimum of $\theta_j \mapsto \mathcal{L}(\theta)$ is reached at some $\theta^\star_j\neq 0$ it means that $\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^\star_j,\theta_{j+1},\ldots,\theta_d)) = 0$. Since
 $$
-\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^*_j,\theta_{j+1},\ldots,\theta_d)) = 2\left((1+\lambda)\theta^*_j -R_j(\theta) + \frac{\mu}{2} \mathrm{sign}(\theta^*_j)\right)\eqsp,
+\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^\star_j,\theta_{j+1},\ldots,\theta_d)) = 2\left((1+\lambda)\theta^\star_j -R_j(\theta) + \frac{\mu}{2} \mathrm{sign}(\theta^\star_j)\right)\eqsp,
 $$
-$\theta^*_j$ and $R_j(\theta)$ have the same sign. Indeed, if $\theta^*_j\geq 0 $ and  $R_j(\theta)<0$ then $\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^*_j,\theta_{j+1},\ldots,\theta_d))>0$ and  $\theta^*_j<0 $ and  $R_j(\theta)\geq 0$ then $\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^*_j,\theta_{j+1},\ldots,\theta_d))<0$. Therefore,
+$\theta^\star_j$ and $R_j(\theta)$ have the same sign. Indeed, if $\theta^\star_j > 0 $ and  $R_j(\theta) \leq 0$ then $\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^\star_j,\theta_{j+1},\ldots,\theta_d))>0$ and  $\theta^\star_j<0 $ and  $R_j(\theta)\geq 0$ then $\partial_j  \mathcal{L}((\theta_1,\ldots,\theta_{j-1},\theta^\star_j,\theta_{j+1},\ldots,\theta_d))<0$. Therefore,
 \begin{align*}
-\theta^*_j &= \frac{R_j(\theta)}{1+\lambda}\left(1 - \frac{\mu\mathrm{sign}(\theta^*_j)}{2R_j(\theta)}\right)\eqsp,\\
+\theta^\star_j &= \frac{R_j(\theta)}{1+\lambda}\left(1 - \frac{\mu\mathrm{sign}(\theta^\star_j)}{2R_j(\theta)}\right)\eqsp,\\
 &= \frac{R_j(\theta)}{1+\lambda}\left(1 - \frac{\mu}{2|R_j(\theta)|}\right)\eqsp.
 \end{align*}
 }
@@ -166,7 +166,7 @@ The estimator $\widehat{\theta}_{\lambda,\mu}$ can be approximated recursively c
 \begin{itemize}
 \item Compute $R_j(\theta)$.
 \item If $1 - \mu/(2|R_j(\theta)|) >0 $ set $\theta_j = \frac{R_j(\theta)}{1+\lambda}\left(1 - \frac{\mu}{2|R_j(\theta)|}\right)$.
-\item If $1 - \mu/(2|R_j(\theta)|) \geq 0 $ set $\theta_j = 0$.
+\item If $1 - \mu/(2|R_j(\theta)|) \leq 0 $ set $\theta_j = 0$.
 \end{itemize} 
 }
 \end{enumerate}
