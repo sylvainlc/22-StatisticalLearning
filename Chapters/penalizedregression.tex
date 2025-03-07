@@ -126,15 +126,15 @@ a  better bound than the $\sigma_\star^2 d /n$ bound of the case $\lambda = 0$.
 \begin{proposition}
 Choosing $\lambda = \lambda_\star$ where 
 $$
-\lambda_\star = \frac{\sigma_\star \mathrm{Trace}\left(X^\top X\right)^{1/2}}{\sqrt{n}\|\param_\star\|_2} \eqsp.
+\lambda_\star = \frac{\sigma_\star \mathrm{Trace}\left(X^\top X\right)^{1/2}}{n\|\param_\star\|_2} \eqsp.
 $$
 yields
 $$
-\bE\left[\mathsf{R}(\widehat \param^{\mathrm{ridge}}_{n,\lambda_\star}) - \mathsf{R}(\param_\star)\right]  \leqslant \frac{\sigma_\star \|\param_\star\|_2 \mathrm{Trace}\left(X^\top X\right)^{1/2}}{\sqrt{n}}  \eqsp.
+\bE\left[\mathsf{R}(\widehat \param^{\mathrm{ridge}}_{n,\lambda_\star}) - \mathsf{R}(\param_\star)\right]  \leqslant \frac{\sigma_\star \|\param_\star\|_2 \mathrm{Trace}\left(X^\top X\right)^{1/2}}{n}  \eqsp.
 $$
 \end{proposition}
 \begin{proof}
-Let $(\vartheta_1,\ldots,\vartheta_d)$ be an orthonormal basis of $\rset^d$ of eigenvectors of $n^{-1}X^\top X$ associated with the eigenvalues $(\lambda_1,\ldots,\lambda_d)\in\rset^d$. Therefore,
+Let $(u_1,\ldots,u_d)$ be an orthonormal basis of $\rset^d$ of eigenvectors of $n^{-1}X^\top X$ associated with the eigenvalues $(\lambda_1,\ldots,\lambda_d)\in\rset^d$. Therefore,
 $$
  \lambda^2\param_\star^\top\left(\frac{1}{n}X^\top X + \lambda I_d\right)^{-2} \frac{1}{n}X^\top X \param_\star = \lambda\sum_{i=1}^d \param_\star^\top \frac{\lambda \lambda_i}{(\lambda_i + \lambda)^2} u_iu_i^\top \param_\star \leqslant  \frac{\lambda}{2}\|\param_\star\|_2^2\eqsp,
 $$
@@ -148,7 +148,7 @@ $$
 $$
 The upper-bound is then minimized by choosing 
 $$
-\lambda_\star = \frac{\sigma_\star \mathrm{Trace}\left(X^\top X\right)^{1/2}}{\sqrt{n}\|\param_\star\|_2} \eqsp.
+\lambda_\star = \frac{\sigma_\star \mathrm{Trace}\left(X^\top X\right)^{1/2}}{n\|\param_\star\|_2} \eqsp.
 $$
 \end{proof}
 

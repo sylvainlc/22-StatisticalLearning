@@ -110,11 +110,11 @@ If the matrix $X$ has full rank, then, $\widehat \param_n = (X^\top X)^{-1}X^\to
 \begin{proof}
 For all $\param\in\rset^d$,
 \[
- \|Y - X\param\|_2^2 = \|Y\|_2^2 + \param^\top X^\top X\param + 2Y^\top X\param\eqsp.
+ \|Y - X\param\|_2^2 = \|Y\|_2^2 + \param^\top X^\top X\param - 2Y^\top X\param\eqsp.
 \]
-The function $\ell:\param \mapsto\|Y\|_2^2 + \param^\top X^\top X\param + 2Y^\top X\param$ is convex and for all $\param\in\rset^d$,
+The function $\ell:\param \mapsto\|Y\|_2^2 + \param^\top X^\top X\param - 2Y^\top X\param$ is convex and for all $\param\in\rset^d$,
 \[
-\nabla \ell (\param) = 2X^\top X\param + 2 X^\top Y\eqsp.
+\nabla \ell (\param) = 2X^\top X\param - 2 X^\top Y\eqsp.
 \]
 As the matrix  $X$ has full rank, $X^\top X$ is nonsingular and $\nabla \ell (\param) =0$ has a unique solution given by
 \[
