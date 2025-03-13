@@ -94,10 +94,10 @@
 
 
 
-\section*{Warm-up}
+\section{Warm-up}
  Let $\calH$ be a RKHS associated with a positive definite kernel $k: \xset\times \xset \to \rset$.
 \begin{enumerate}
-\item  Prove that for all $(x,y)\in\xset\times \xset$, 
+\item  Prove that for all $(x,y)\in\xset\times \xset$ and $f \in \calH$, 
 $$
 |f(x)-f(y)|\leqslant \|f\|_{\calH}\|k(x,\cdot)-k(y,\cdot)\|_{\calH}\eqsp.
 $$
@@ -120,6 +120,10 @@ Write, for all $x\in\xset$,
 $$
 \|k(x,\cdot) - \widetilde k(x,\cdot)\|_{\calH}^2 = \langle k(x,\cdot) - \widetilde k(x,\cdot),k(x,\cdot) - \widetilde k(x,\cdot)\rangle = k(x,x) - \widetilde k(x,x) +  \widetilde k(x,x) - k(x,x)= 0\,.
 $$
+Thus, by Cauchy-Schwarz and the reproducing property, for all $x, y \in \xset$,
+$$
+|k(x,y) - \widetilde k(x, y)| = |\langle k(x,\cdot), k(y, \cdot)\rangle_\calH - \langle\widetilde k(x, \cdot), k(y,\cdot)\rangle_\calH| \leq \| k(x,\cdot) - \widetilde k(x,\cdot) \|_\calH \|k(y, \cdot)\|_\calH = 0.
+$$
 }
 
 \item  Prove that  for all $x\in\xset$, the function defined on $\calH$ by $\delta_x: f \mapsto f(x)$ is continuous.
@@ -127,17 +131,22 @@ $$
 \vspace{.2cm}
 
 {\em
-
+Let $x \in \xset$.
+Let $f \in \calH$ and $(f_n)_n \subset \calH$ such that $\|f_n - f\|_\calH \rightarrow 0$.
+Then, by Cauchy-Schwarz,
+$$
+| \delta_x(f) - \delta_x(f_n) | = | f(x) - f_n(x) | = | \langle f_n - f, k(x,\cdot) \rangle_\calH | \leq \| f_n - f \|_\calH \| k(x,\cdot) \|_\calH \rightarrow 0.
+$$
 }
 \end{enumerate}
 
-\section*{Kernel Ridge regression}
+\section{Kernel Ridge regression}
 Let $\mathcal{H}$ be a RKHS on $\mathcal{X}$ with kernel $k$.  We consider the regression model $Y_{i}=f^*(X_{i})+\xi_{i}$, $i\in\{1,\ldots,n\}$, with $\xi_{i}$, $1\leq i \leq n$,  independent centered noise with finite variance. The unknown function $f^*$ is estimated  by the solution 
 $\widehat f$  of the convex minimization problem
 $$\widehat f=\argmin_{f\in\mathcal{H}}\left\{{1\over n}\sum_{i=1}^n(Y_{i}-f(X_{i}))^2+{\lambda\over n} \|f\|_{\mathcal{H}}^2\right\}\,,$$
 with $\lambda>0$.
 
-	\subsection*{Solving Kernel ridge regression}
+\subsection{Solving Kernel ridge regression}
 \begin{enumerate}
 	%\item Prove that $\widehat f$ belongs to the linear span $V=\textsf{span}\{k(x_{i},.): i=1,\ldots,n\}$.
 	\item Check that $\widehat f:x\mapsto \sum_{j=1}^n\widehat \beta_{j}k(X_{j},x)$ where $\widehat \beta=(\widehat \beta_{1},\ldots,\widehat \beta_{n})^\top$ is solution to
@@ -154,7 +163,8 @@ $$
 This yields
 		\begin{align*}
 			{1\over n}\sum_{i=1}^n(Y_{i}-f(X_{i}))^2+{\lambda\over n} \|f\|_{\mathcal{H}}^2 
-			& = {1\over n}\sum_{i=1}^n(Y_{i}-\sum_{j=1}^n \beta_j k(X_j, X_i))^2+{\lambda\over n} \langle \sum_{j=1}^n \beta_j k(X_j, \cdot), \sum_{i=1}^n \beta_i k(X_i, \cdot) \rangle,
+			& = {1\over n}\sum_{i=1}^n(Y_{i}-\sum_{j=1}^n \beta_j k(X_j, X_i))^2 \\
+			&\qquad+{\lambda\over n} \langle \sum_{j=1}^n \beta_j k(X_j, \cdot), \sum_{i=1}^n \beta_i k(X_i, \cdot) \rangle,
 		\end{align*}
 	which gives the result, since 
 $$
@@ -183,7 +193,7 @@ $$
 }
 \end{enumerate}
 
-\subsection*{Bias and variance}
+\subsection{Bias and variance}
 %The design $x_{1},\ldots,x_{n}$ is assumed to be fixed.
 We assume that $f^*\in\mathcal{H}$ and we write 
 $$f^*_{V}: x \mapsto \sum_{i=1}^n \beta_{i}^*k(X_{i},x)$$ 
@@ -209,7 +219,7 @@ Since $(u_i)_{1 \leq i \leq n}$ is an orthonormal basis of $\R^n$,
 \vspace{.2cm}
 
 {\em
-First, note that, for all $1 \leq i \leq n$, 
+First, note that, for all $1 \leq i \leq n$, $f^*(X_i) = f^*_V(X_i) = K_i^\top \beta^*$ and 
 		\begin{align*}
 			\langle \E [Y], u_i \rangle  = \langle K \beta^* , u_i\rangle 
 			= \langle \beta^* , K u_i\rangle = \lambda_i \langle \beta^* , u_i\rangle.
@@ -222,7 +232,7 @@ First, note that, for all $1 \leq i \leq n$,
 			& = \sum_{i=1}^n \left( \frac{\lambda \lambda_i }{\lambda_i + \lambda}\right)^2 \langle \beta^*, u_i \rangle^2.
 		\end{align*}
 }
-	\item We assume henceforth that the $\varepsilon_{i}=Y_{i}-f^*(X_{i})$, $i=1,\ldots,n$, have a covariance $\mathbb{V}[\varepsilon]=\sigma^2I_{n}$.
+	\item We assume henceforth that the $\xi_{i}=Y_{i}-f^*(X_{i})$, $i=1,\ldots,n$, have a covariance $\mathbb{V}[\xi]=\sigma^2I_{n}$.
 	Check that the covariance matrix of $K\widehat \beta$ is equal to
 	$$\mathbb{V}[K\widehat \beta]=\sum_{i=1}^n \left(\lambda_{i}\sigma\over \lambda_{i}+\lambda\right)^2u_{i}u_{i}^\top\,.$$
 
@@ -244,7 +254,10 @@ Since $\widehat{\beta} = (K + \lambda I)^{-1}y$,
 \vspace{.2cm}
 
 {\em
-
+By the biais-variance tradeoff,
+$$
+\E\left[\|\widehat f - f^*\|^2_{n} \right] = \frac{1}{n} \E\left[\|K\widehat\beta - K\beta^*\|^2\right] = \frac{1}{n}\mathrm{Tr}(\V(K\widehat\beta)) + \frac{1}{n} \|\E[K\widehat\beta] - K\beta^*\|^2.
+$$
 }
 \end{enumerate}
 
