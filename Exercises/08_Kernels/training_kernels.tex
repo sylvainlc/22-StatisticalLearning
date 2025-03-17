@@ -94,10 +94,10 @@
 
 
 
-\section*{Warm-up}
+\section{Warm-up}
  Let $\calH$ be a RKHS associated with a positive definite kernel $k: \xset\times \xset \to \rset$.
 \begin{enumerate}
-\item  Prove that for all $(x,y)\in\xset\times \xset$, 
+\item  Prove that for all $(x,y)\in\xset\times \xset$ and $f \in \calH$, 
 $$
 |f(x)-f(y)|\leqslant \|f\|_{\calH}\|k(x,\cdot)-k(y,\cdot)\|_{\calH}\eqsp.
 $$
@@ -131,13 +131,13 @@ $$
 }
 \end{enumerate}
 
-\section*{Kernel Ridge regression}
+\section{Kernel Ridge regression}
 Let $\mathcal{H}$ be a RKHS on $\mathcal{X}$ with kernel $k$.  We consider the regression model $Y_{i}=f^*(X_{i})+\xi_{i}$, $i\in\{1,\ldots,n\}$, with $\xi_{i}$, $1\leq i \leq n$,  independent centered noise with finite variance. The unknown function $f^*$ is estimated  by the solution 
 $\widehat f$  of the convex minimization problem
 $$\widehat f=\argmin_{f\in\mathcal{H}}\left\{{1\over n}\sum_{i=1}^n(Y_{i}-f(X_{i}))^2+{\lambda\over n} \|f\|_{\mathcal{H}}^2\right\}\,,$$
 with $\lambda>0$.
 
-	\subsection*{Solving Kernel ridge regression}
+\subsection{Solving Kernel ridge regression}
 \begin{enumerate}
 	%\item Prove that $\widehat f$ belongs to the linear span $V=\textsf{span}\{k(x_{i},.): i=1,\ldots,n\}$.
 	\item Check that $\widehat f:x\mapsto \sum_{j=1}^n\widehat \beta_{j}k(X_{j},x)$ where $\widehat \beta=(\widehat \beta_{1},\ldots,\widehat \beta_{n})^\top$ is solution to
@@ -183,7 +183,7 @@ with $\lambda>0$.
 %}
 \end{enumerate}
 
-\subsection*{Bias and variance}
+\subsection{Bias and variance}
 %The design $x_{1},\ldots,x_{n}$ is assumed to be fixed.
 We assume that $f^*\in\mathcal{H}$ and we write 
 $$f^*_{V}: x \mapsto \sum_{i=1}^n \beta_{i}^*k(X_{i},x)$$ 
@@ -222,7 +222,7 @@ for the projection of $f^*$ onto the linear span $V=\textrm{span}\{k(X_{i},.): i
 %			& = \sum_{i=1}^n \left( \frac{\lambda \lambda_i }{\lambda_i + \lambda}\right)^2 \langle \beta^*, u_i \rangle^2.
 %		\end{align*}
 %}
-	\item We assume henceforth that the $\varepsilon_{i}=Y_{i}-f^*(X_{i})$, $i=1,\ldots,n$, have a covariance $\mathbb{V}[\varepsilon]=\sigma^2I_{n}$.
+	\item We assume henceforth that the $\xi_{i}=Y_{i}-f^*(X_{i})$, $i=1,\ldots,n$, have a covariance $\mathbb{V}[\xi]=\sigma^2I_{n}$.
 	Check that the covariance matrix of $K\widehat \beta$ is equal to
 	$$\mathbb{V}[K\widehat \beta]=\sum_{i=1}^n \left(\lambda_{i}\sigma\over \lambda_{i}+\lambda\right)^2u_{i}u_{i}^\top\,.$$
 
