@@ -106,7 +106,106 @@ $\mu_{a}=m_{k}$ and $v_{a}=\gamma_{k}$ for all $a\in G^*_{k}$ and $k=1,\ldots,K$
 \item In the special case where $\gamma_{1}=\ldots=\gamma_{K}=\gamma$, which partition $G=(G_{1},\ldots,G_{K})$ minimizes $\E[\crit(G)]$?
 \end{enumerate}
 	
-	
+\subsection*{EM algorithm (bonus)}
+In the case where we are interested in estimating unknown parameters $\theta\in\mathbb{R}^m$ characterizing a model with missing data, the Expectation Maximization (EM) algorithm (Dempster et al. 1977) can be used when the joint distribution of the missing data $X$ and the observed data $Y$ is explicit. For all $\theta\in\mathbb{R}^m$, let $p_{\theta}$ be the probability density function of $(X,Y)$ when the model is parameterized by $\theta$ with respect to a given reference measure $\mu$. The EM algorithm aims at computing iteratively an approximation of the maximum likelihood estimator which maximizes the observed data loglikelihood:
+$$
+\ell(\theta;Y) = \log p_{\theta}(Y) =\log \int f_{\theta}(x,Y)\mu(\mathrm{d}x)\eqsp.
+$$
+As this quantity cannot be computed explicitly in general cases, the EM algorithm finds the maximum likelihood estimator by iteratively maximizing the expected complete data loglikelihood.
+%Denote by 
+%$$
+%\ell(X,Y;\theta) = \log f(X,Y;\theta)
+%$$
+%the complete data loglikelihood  
+Start with an inital value $\theta^{(0)}$ and let $\theta^{(t)}$ be the estimate at the $t$-th iteration for $t\geqslant 0$, then the next iteration of EM is decomposed into two steps.
+\begin{enumerate}
+\item {\bf E step}. Compute the expectation of the complete data loglikelihood, with respect to the conditional distribution of the missing data given the observed data parameterized by $\theta^{(t)}$:
+$$
+Q(\theta,\theta^{(t)}) =\mathbb{E}_{\theta^{(t)}}\left[\log p_{\theta}(X,Y)|Y \right]\eqsp.%=\int \ell(x,Y;\theta)f(x|Y;\theta^{(t)}) \mathrm{d}x \eqsp.
+$$
+\item {\bf M step}. Determine $\theta^{(t+1)}$ by maximizing the function Q:
+$$
+\theta^{(t+1)}\in \mbox{argmax}_\theta Q(\theta,\theta^{(t)})\eqsp.
+$$
+\end{enumerate}
+\begin{enumerate}
+\item Prove the following crucial property motivates the EM algorithm.  For all $\theta,\theta^{(t)}$,
+$$
+\ell(Y;\theta) - \ell(Y;\theta^{(t)}) \geqslant Q(\theta,\theta^{(t)})-Q(\theta^{(t)},\theta^{(t)})\eqsp.
+$$
+
+
+%\vspace{.2cm}
+%
+%{\em
+%This may be proved by noting that
+%$$
+%\ell(Y;\theta) = \log \left(\frac{p_{\theta}(X,Y)}{p_{\theta}(X|Y)}\right)\eqsp.
+%$$
+%Considering the conditional expectation of both terms given $Y$ when the parameter value is $\theta^{(t)}$ yields
+%$$
+%\ell(Y;\theta) = Q(\theta,\theta^{(t)}) - \mathbb{E}_{\theta^{(t)}}[\log p_{\theta}(X|Y)|Y]\eqsp.
+%$$
+%Then,
+%$$
+%\ell(Y;\theta) - \ell(Y;\theta^{(t)}) = Q(\theta,\theta^{(t)})-Q(\theta^{(t)},\theta^{(t)}) + H(\theta,\theta^{(t)}) - H(\theta^{(t)},\theta^{(t)})\eqsp,
+%$$
+%where
+%$$
+%H(\theta,\theta^{(t)}) = - \mathbb{E}_{\theta^{(t)}}[\log p_{\theta}(X|Y)|Y]\eqsp.
+%$$
+%The proof is completed by noting that
+%$$
+%H(\theta,\theta^{(t)}) - H(\theta^{(t)},\theta^{(t)})\geqslant 0\eqsp,
+%$$
+%as this difference if a Kullback-Leibler divergence. 
+%}
+%Therefore, any value $\theta$ ,which improves $Q(\theta,\theta^{(t)})$ beyond reference value $Q(\theta^{(t)},\theta^{(t)})$, won't decrease the observed-data likelihood. Based on this inequality, the EM algorithm produces iteratively a sequence of parameter estimates $\left(\theta^{(t)}\right)_{t\ge 0}$. 
+\end{enumerate}
+In the following, $X = (X_1,\ldots,X_n)$ and $Y = (Y_1,\ldots,Y_n)$ where $\{(X_i,Y_i)\}_{1\leqslant i\leqslant n}$  are i.i.d. in $\{-1,1\} \times \rset^d$. For $k\in\{-1,1\}$, write $\pi_k = \bP(X_1 = k)$. Assume that, conditionally on the event $\{X_1 = k\}$, $Y_1$ has a Gaussian distribution with mean $\mu_k \in\rset^d$ and covariance matrix $\Sigma\in \rset^{d\times d}$. In this case, the parameter $\theta=(\pi_1, \mu_1,\mu_{-1}, \Sigma)$ belongs to the set $\Theta= [0,1] \times \rset^d \times \rset^d \times \rset^{d \times d}$.
+\begin{enumerate}
+\item Write the complete data loglikelihood.
+
+%\vspace{.2cm}
+%
+%{\em
+%The complete data loglikelihood  is given by
+%\begin{align*}
+%\log p_{\theta}\left(X,Y\right) &= - \frac{nd}{2} \log(2\pi)+\sum_{i=1}^n\sum_{k\in\{-1,1\}}\1_{X_i=k}\left(\log \pi_{k} -\frac{\log \det \Sigma}{2} - \frac{1}{2}\left(Y_i - \mu_{k}\right)^\top\Sigma^{-1}\left(Y_i - \mu_{k}\right)\right) \eqsp,\\
+%&= - \frac{nd}{2} \log(2\pi)-\frac{n}2 \log\det\Sigma + \left(\sum_{i=1}^n\1_{X_i=1}\right)\log \pi_1 + \left(\sum_{i=1}^n\1_{X_i=-1}\right)\log (1-\pi_{1})\\
+%& \hspace{1cm}-  \frac{1}{2}\sum_{i=1}^n\1_{X_i=1}\left(Y_i - \mu_{1}\right)^\top\Sigma^{-1}\left(Y_i - \mu_{1}\right) -  \frac{1}{2}\sum_{i=1}^n\1_{X_i=-1}\left(Y_i - \mu_{-1}\right)^\top\Sigma^{-1}\left(Y_i - \mu_{-1}\right)\eqsp.
+%\end{align*}
+%}
+\item Let $\theta^{(t)}$ be the current parameter estimate. Compute $\theta\mapsto Q(\theta,\theta^{(t)})$.
+
+%\vspace{.2cm}
+%
+%{\em
+%Write $\omega_t^i = \bP_{\theta^{(t)}}(X_i=1|Y_i)$. The intermediate quantity of the EM algorithm is given by
+%\begin{align*}
+%Q(\theta,\theta^{(t)}) &= - \frac{nd}{2} \log(2\pi)-\frac{n}2 \log\det\Sigma + \left(\sum_{i=1}^n\omega_t^i \right)\log \pi_1 + \sum_{i=1}^n\left(1 - \omega_t^i \right)\log (1-\pi_{1})\\
+%& \hspace{1cm}-  \frac{1}{2}\sum_{i=1}^n\omega_t^i \left(Y_i - \mu_{1}\right)^T\Sigma^{-1}\left(Y_i - \mu_{1}\right) -  \frac{1}{2}\sum_{i=1}^n(1-\omega_t^i )\left(Y_i - \mu_{-1}\right)^T\Sigma^{-1}\left(Y_i - \mu_{-1}\right)\eqsp.
+%\end{align*}
+%}
+\item Compute $\theta^{(t+1)}$.
+
+%\vspace{.2cm}
+%
+%{\em
+%The gradient of $Q(\theta,\theta^{(t)})$ with respect to $\theta$ is therefore given by
+%\begin{align*}
+%\frac{\partial Q(\theta,\theta^{(t)})}{\partial \pi_1} &= \frac{\sum_{i=1}^n\omega_t^i}{\pi_1} - \frac{n-\sum_{i=1}^n\omega_t^i}{1-\pi_{1}}\eqsp,\\
+%\frac{\partial Q(\theta,\theta^{(t)})}{\partial \mu_1} &= \sum_{i=1}^n\omega_t^i\left(2\Sigma^{-1}Y_i - 2\Sigma^{-1}\mu_{1}\right)\eqsp,\\
+%\frac{\partial Q(\theta,\theta^{(t)})}{\partial \mu_{-1}} &= \sum_{i=1}^n(1-\omega_t^i)\left(2\Sigma^{-1}Y_i - 2\Sigma^{-1}\mu_{-1}\right)\eqsp,\\
+%\frac{\partial Q(\theta,\theta^{(t)})}{\partial \Sigma^{-1}} &= \frac{n}{2}\Sigma -  \frac{1}{2}\sum_{i=1}^n\omega_t^i\left(Y_i - \mu_{1}\right)\left(Y_i - \mu_{1}\right)^\top -  \frac{1}{2}\sum_{i=1}^n(1-\omega_t^i)\left(Y_i - \mu_{-1}\right)\left(Y_i - \mu_{-1}\right)^\top\eqsp.
+%\end{align*}
+%Then, $\theta^{(t+1)}$ is defined as the only parameter such that all these equations are set to 0. It is given by
+%\begin{align*}
+%\widehat \pi_1^{(t+1)} &= \frac{1}{n}\sum_{i=1}^n\omega_t^i\eqsp,\\
+%\widehat \mu_1^{(t+1)} &= \frac{1}{\sum_{i=1}^n\omega_t^i}\sum_{i=1}^n\omega_t^i\,Y_i\eqsp,\\
+%\widehat\Sigma^{(t+1)} &= \frac{1}{n}\sum_{i=1}^n\omega_t^i\left(Y_i - \mu_{1}\right)\left(Y_i - \mu_{1}\right)^\top +  \frac{1}{n}\sum_{i=1}^n(1-\omega_t^i)\left(Y_i - \mu_{-1}\right)\left(Y_i - \mu_{-1}\right)^\top\eqsp.
+%\end{align*}}
+\end{enumerate}
 
 
 
