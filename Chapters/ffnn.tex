@@ -107,7 +107,7 @@ For all $1\leqslant j\leqslant M$,
 \partial_{(z^L(X))_j}\ell_{\theta}(X,Y) &=  -\sum_{k=1}^{M} \1_{Y=k}\partial_{(z^L(X))_j}\log f_{\theta}(X)_k\eqsp,\\
 &=  -\sum_{k=1}^{M} \1_{Y=k}\partial_{(z^L(X))_j}\log \mathrm{softmax}(z^L(X))_k\eqsp,\\
 &=  -\sum_{k=1}^{M} \1_{Y=k}\frac{\mathrm{softmax}(z^L(X))_j (1-\mathrm{softmax}(z^L(X))_j )\1_{j=k} - \mathrm{softmax}(z^L(X))_j \mathrm{softmax}(z^L(X))_k\1_{j\neq k}}{\mathrm{softmax}(z^L(X))_k}\eqsp,\\
-&=  -\sum_{k=1}^{M} \1_{Y=k}\left\{(1-\mathrm{softmax}(z^L(X))_k )\1_{j=k} -  \mathrm{softmax}(z^L(X))_k\1_{j\neq k}\right\}\eqsp.
+&=  -\sum_{k=1}^{M} \1_{Y=k}\left\{(1-\mathrm{softmax}(z^L(X))_k )\1_{j=k} -  \mathrm{softmax}(z^L(X))_j\1_{j\neq k}\right\}\eqsp.
 \end{align*}
 Therefore,
 $$
