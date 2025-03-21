@@ -127,7 +127,7 @@ The unknown parameter is $\theta = \{(b^j,W^j)\}_{1\leq j \leq 3}$ is estimated 
 $$
 \theta_p = \theta_{p-1} - \gamma_p \nabla_{\theta=\theta_{p-1}} \left(-\frac{1}{B} \sum_{i=1}^B\sum_{k=1}^{M} \1_{Y_{I_i}=k}\log \mathbb{P}_{\theta}(Y_{I_i} = k | X_{I_i})\right)\eqsp,
 $$
-where $B$ is the batch size, $(\gamma_p)_{p\geqslant 1}$ are positive step-sizes, and $(I_i)_{1 \leqslant i \leqslant B}$ are i.i.d. with unifrom distribution on  $\{1,\ldots,n\}$. Of course, this elementary stochastic gradient descent algorithm can be improved (with for instance Adagrad, Adadelta, Rmsprop, Adam).
+where $B$ is the batch size, $(\gamma_p)_{p\geqslant 1}$ are positive step-sizes, and $(I_i)_{1 \leqslant i \leqslant B}$ are i.i.d. with uniform distribution on  $\{1,\ldots,n\}$. Of course, this elementary stochastic gradient descent algorithm can be improved (with for instance Adagrad, Adadelta, Rmsprop, Adam).
 }
 \item What is the complexity of an iteration of the previous algorithm ?
 
@@ -151,11 +151,11 @@ where $b^1\in\rset^{d_1}$, $W^1\in\rset^{d_1\times d}$ and for all $2\leqslant k
 $$
 f_{\theta}(x) = h_{\theta}^L(x)
 $$
- be the output layer of the MLP. As there is no modelling assumptions anymore, virtually any activation functions $\varphi^m$, $1\leqslant m\leqslant L-1$ may be used. In this section, it is assumed that these intermediate activation functions apply elementwise and, with a minor abuse of notations, we write for all $1\leqslant m\leqslant L-1$ and all $z\in\rset^{d_m}$,
+ be the output layer of the MLP. As there is no modeling assumptions anymore, virtually any activation functions $\varphi^m$, $1\leqslant m\leqslant L-1$ may be used. In this section, it is assumed that these intermediate activation functions apply elementwise and, with a minor abuse of notations, we write for all $1\leqslant m\leqslant L-1$ and all $z\in\rset^{d_m}$,
 $$
 \varphi_m(z) = (\varphi_m(z_1),\ldots, \varphi_m(z_{d_m}))\eqsp,
 $$
-with $\varphi_m: \rset\to \rset$ the seleced scalar activation function. 
+with $\varphi_m: \rset\to \rset$ the selected scalar activation function. 
 
 In a classification setting ,the output $h_{\theta}^L(x)$ is the estimate of the probability that the class is  $k$ for all $1\leqslant k\leqslant M$, given the input $x$. The common choice in this case is the softmax function: for all $1\leqslant i\leqslant M$
 $$

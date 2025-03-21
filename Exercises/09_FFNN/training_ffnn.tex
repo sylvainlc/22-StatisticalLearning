@@ -94,7 +94,7 @@
 
 
 
-\section*{Warm-up}
+\section{Warm-up}
 Assume that the observation $Y$ takes values in $\{1,\ldots,M\}$ and that $X\in\mathbb{R}^d$. The negative loglikelihood to be minimized to estimate the parameters of the model is given by:
 $$
 \theta \mapsto \ell^{\mathrm{multi}}_n(\theta)= -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{M} \1_{Y_i=k}\log \mathbb{P}_{\theta}(Y_i = k | X_i)\,,
@@ -109,7 +109,7 @@ where $\{(X_i,Y_i)\}_{1\leqslant i\leqslant n}$ are i.i.d. observations with the
 
 
 
-\section*{Backpropagation}
+\section{Backpropagation}
 Let $x\in\rset^d$ be the input of a MLP with L layers and define all layers as follows.
 \begin{align*}
 h_{\theta}^0(x) &= x\eqsp,\\
@@ -120,11 +120,11 @@ where $b^1\in\rset^{d_1}$, $W^1\in\rset^{d_1\times d}$ and for all $2\leqslant k
 $$
 f_{\theta}(x) = h_{\theta}^L(x)
 $$
- be the output layer of the MLP. As there is no modelling assumptions anymore, virtually any activation functions $\varphi^m$, $1\leqslant m\leqslant L-1$ may be used. In this section, it is assumed that these intermediate activation functions apply elementwise and, with a minor abuse of notations, we write for all $1\leqslant m\leqslant L-1$ and all $z\in\rset^{d_m}$,
+ be the output layer of the MLP. As there is no modeling assumptions anymore, virtually any activation functions $\varphi^m$, $1\leqslant m\leqslant L-1$ may be used. In this section, it is assumed that these intermediate activation functions apply elementwise and, with a minor abuse of notations, we write for all $1\leqslant m\leqslant L-1$ and all $z\in\rset^{d_m}$,
 $$
 \varphi_m(z) = (\varphi_m(z_1),\ldots, \varphi_m(z_{d_m}))\eqsp,
 $$
-with $\varphi_m: \rset\to \rset$ the seleced scalar activation function. 
+with $\varphi_m: \rset\to \rset$ the selected scalar activation function. 
 
 In a classification setting ,the output $h_{\theta}^L(x)$ is the estimate of the probability that the class is  $k$ for all $1\leqslant k\leqslant M$, given the input $x$. The common choice in this case is the softmax function: for all $1\leqslant i\leqslant M$
 $$
