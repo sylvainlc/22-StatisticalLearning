@@ -85,7 +85,7 @@
 \medskip
 
 
-\subsection*{K means algorithm}
+\section{K-means algorithm}
 Let $n\geqslant 1$ and  $X_{1},\ldots,X_{n}$ in $\R^d$.
 The $K$-means algorithm aims at minimizing over all partitions $G=(G_{1},\ldots,G_{K})$ of $\{1,\ldots,p\}$ the criterion
 $$
@@ -176,31 +176,27 @@ By definition of  $G^*$,
 	& = \sum_{k=1}^K (|G^*_k|-1) \gamma_k.
 	\end{align*}
 }
-\item In the special case where $\gamma_{1}=\ldots=\gamma_{K}=\gamma$, which partition $G=(G_{1},\ldots,G_{K})$ minimizes $\E[\crit(G)]$?
+\item In the special case where there exists $\gamma > 0$ such that $v_{i}=\gamma$ for all $i \in \{1,\ldots,n\}$, which partition $G=(G_{1},\ldots,G_{K})$ minimizes $\E[\crit(G)]$?
 
 \vspace{.2cm}
 
 {\em
-Assume that $\gamma_1 = \hdots = \gamma_K = \gamma$. Then, for any partition $G$, 
+Assume that $v_a = \gamma$ for all $a$. Then, for any partition $G$, 
 	\begin{align*}
 	\E \left[ \crit(G) \right] & = \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( \| \mu_a - \mu_b\|^2 \right)
 	+ \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( v_a + v_b \right) \mathds{1}_{a \neq b}\\
-	& = \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( \| \mu_a - \mu_b\|^2 \right) + \sum_k \frac{|G_k|-1}{|G_k|} \sum_{a \in G_k} \gamma\\
-	& = \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( \| \mu_a - \mu_b\|^2 \right) + \gamma(n-K).
+	& = \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( \| \mu_a - \mu_b\|^2 \right) + \sum_{k=1}^K \frac{|G_k|-1}{|G_k|} \sum_{a \in G_k} \gamma\\
+	& = \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( \| \mu_a - \mu_b\|^2 \right) + \gamma(n-K) \\
+	& \geqslant \gamma(n-K).
 	\end{align*}
-	In particular, for $G^*$ we have
-	\begin{align*}
-	\E \left[ \crit(G^*) \right] & = \gamma(n-K),
-	\end{align*}
-	which leads to 
-	\begin{align*}
-	\E \left[ \crit(G) \right] - \E \left[ \crit(G^*) \right] = \frac{1}{2}  \sum_{k=1}^K \frac{1}{|G_k|}\sum_{a, b\in G_{k}} \left( \| \mu_a - \mu_b\|^2 \right) \geq 0\;.
-	\end{align*}
-	The minimum of $\E \left[ \crit(G) \right]$ is reached at $G = G^*$. To prove that this minimum is unique, choose $G$ such that $\E \left[ \crit(G) \right] = \E \left[ \crit(G^*) \right]$. Then, for all $k$, and for all $a,b \in G_k$,  $\mu_a = \mu_b$ which implies that $G = G^*$ (if all $\mu_k$ are different).
+	In particular, for $G^*$ we have $\E \left[ \crit(G^*) \right] = \gamma(n-K)$.
+	Therefore, the minimum of $\E \left[ \crit(G) \right]$ is reached at $G = G^*$.
+	To prove that this minimum is unique when all $\mu_k$ are different, choose $G$ such that $\E \left[ \crit(G) \right] = \E \left[ \crit(G^*) \right]$.
+	Then, for all $k$, and for all $a,b \in G_k$,  $\mu_a = \mu_b$ which implies that $G = G^*$.
 }
 \end{enumerate}
 	
-\subsection*{EM algorithm (bonus)}
+\section{EM algorithm (bonus)}
 In the case where we are interested in estimating unknown parameters $\theta\in\mathbb{R}^m$ characterizing a model with missing data, the Expectation Maximization (EM) algorithm (Dempster et al. 1977) can be used when the joint distribution of the missing data $X$ and the observed data $Y$ is explicit. For all $\theta\in\mathbb{R}^m$, let $p_{\theta}$ be the probability density function of $(X,Y)$ when the model is parameterized by $\theta$ with respect to a given reference measure $\mu$. The EM algorithm aims at computing iteratively an approximation of the maximum likelihood estimator which maximizes the observed data loglikelihood:
 $$
 \ell(\theta;Y) = \log p_{\theta}(Y) =\log \int f_{\theta}(x,Y)\mu(\mathrm{d}x)\eqsp.

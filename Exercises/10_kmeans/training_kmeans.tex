@@ -85,7 +85,7 @@
 \medskip
 
 
-\subsection*{K means algorithm}
+\section{K-means algorithm}
 Let $n\geqslant 1$ and  $X_{1},\ldots,X_{n}$ in $\R^d$.
 The $K$-means algorithm aims at minimizing over all partitions $G=(G_{1},\ldots,G_{K})$ of $\{1,\ldots,p\}$ the criterion
 $$
@@ -103,10 +103,10 @@ $$
 What is the value of $\E[\crit(G)]$ when all the within-group variables have the same mean?
 \item We assume now that there exists a partition $G^*=(G^*_{1},\ldots,G^*_{K})$ such  that there exist $m_{1},\ldots,m_{K}\in\R^d$ and $\gamma_{1},\ldots,\gamma_{K}>0$ satisfying
 $\mu_{a}=m_{k}$ and $v_{a}=\gamma_{k}$ for all $a\in G^*_{k}$ and $k=1,\ldots,K$. Compute $\E[\crit(G^*)]$.
-\item In the special case where $\gamma_{1}=\ldots=\gamma_{K}=\gamma$, which partition $G=(G_{1},\ldots,G_{K})$ minimizes $\E[\crit(G)]$?
+\item In the special case where there exists $\gamma > 0$ such that $v_{i}=\gamma$ for all $i \in \{1,\ldots,n\}$, which partition $G=(G_{1},\ldots,G_{K})$ minimizes $\E[\crit(G)]$?
 \end{enumerate}
 	
-\subsection*{EM algorithm (bonus)}
+\section{EM algorithm (bonus)}
 In the case where we are interested in estimating unknown parameters $\theta\in\mathbb{R}^m$ characterizing a model with missing data, the Expectation Maximization (EM) algorithm (Dempster et al. 1977) can be used when the joint distribution of the missing data $X$ and the observed data $Y$ is explicit. For all $\theta\in\mathbb{R}^m$, let $p_{\theta}$ be the probability density function of $(X,Y)$ when the model is parameterized by $\theta$ with respect to a given reference measure $\mu$. The EM algorithm aims at computing iteratively an approximation of the maximum likelihood estimator which maximizes the observed data loglikelihood:
 $$
 \ell(\theta;Y) = \log p_{\theta}(Y) =\log \int f_{\theta}(x,Y)\mu(\mathrm{d}x)\eqsp.

@@ -94,7 +94,7 @@
 
 
 
-\section*{Warm-up}
+\section{Warm-up}
 Assume that the observation $Y$ takes values in $\{1,\ldots,M\}$ and that $X\in\mathbb{R}^d$. The negative loglikelihood to be minimized to estimate the parameters of the model is given by:
 $$
 \theta \mapsto \ell^{\mathrm{multi}}_n(\theta)= -\frac{1}{n} \sum_{i=1}^n\sum_{k=1}^{M} \1_{Y_i=k}\log \mathbb{P}_{\theta}(Y_i = k | X_i)\,,
@@ -123,11 +123,11 @@ h_{\theta}^3(X_i)  &= \{\mathbb{P}_{\theta}(Y_i = k | X_i)\}_{1\leq k \leq M} = 
 \vspace{.2cm}
 
 {\em
-The unknown parameter is $\theta = \{(b^j,W^j)\}_{1\leq j \leq 3}$ is estimated iteratively. Let $\theta_0$ be an initial estimate (randomly chosen). Then for each iteration $p\geqslant 1$, the new estimate is computed as follows
+The unknown parameter is $\theta = (b^1,W^1,b^2,W^2,b^3,W^3)$ is estimated iteratively. Let $\theta_0$ be an initial estimate (randomly chosen). Then for each iteration $p\geqslant 1$, the new estimate is computed as follows
 $$
-\theta_p = \theta_{p-1} - \gamma_p \nabla_{\theta=\theta_{p-1}} \left(-\frac{1}{B} \sum_{i=1}^B\sum_{k=1}^{M} \1_{Y_{I_i}=k}\log \mathbb{P}_{\theta}(Y_{I_i} = k | X_{I_i})\right)\eqsp,
+\theta_p = \theta_{p-1} - \gamma_p \nabla_{\theta=\theta_{p-1}} \left(-\frac{1}{B} \sum_{i=1}^B\sum_{k=1}^{M} \1_{Y_{I_i^p}=k}\log \mathbb{P}_{\theta}(Y_{I_i^p} = k | X_{I_i^p})\right)\eqsp,
 $$
-where $B$ is the batch size, $(\gamma_p)_{p\geqslant 1}$ are positive step-sizes, and $(I_i)_{1 \leqslant i \leqslant B}$ are i.i.d. with uniform distribution on  $\{1,\ldots,n\}$. Of course, this elementary stochastic gradient descent algorithm can be improved (with for instance Adagrad, Adadelta, Rmsprop, Adam).
+where $B$ is the batch size, $(\gamma_p)_{p\geqslant 1}$ are positive step-sizes, and $(I_i)_{1 \leqslant p, 1 \leqslant i \leqslant B}$ are i.i.d.\ with uniform distribution on  $\{1,\ldots,n\}$. Of course, this elementary stochastic gradient descent algorithm can be improved (with for instance Adagrad, Adadelta, Rmsprop, Adam).
 }
 \item What is the complexity of an iteration of the previous algorithm ?
 
@@ -140,14 +140,14 @@ Using $B$ randomly chosen observations to provide each update instead of using a
 
 
 
-\section*{Backpropagation}
+\section{Backpropagation}
 Let $x\in\rset^d$ be the input of a MLP with L layers and define all layers as follows.
 \begin{align*}
 h_{\theta}^0(x) &= x\eqsp,\\
 z_{\theta}^k(x)  &= b^k + W^kh_{\theta}^{k-1}(x)\quad \mathrm{for\;all\;} 1\leqslant k\leqslant L\eqsp,\\
 h_{\theta}^k(x)  &= \varphi_k(z_{\theta}^{k}(x))\quad \mathrm{for\;all\;}1\leqslant k\leqslant L\eqsp,
 \end{align*}
-where $b^1\in\rset^{d_1}$, $W^1\in\rset^{d_1\times d}$ and for all $2\leqslant k\leqslant L$, $b^k\in\rset^{d_k}$, $W^k\in\rset^{d_k\times d_{k-1}}$. For all $1\leqslant k\leqslant L$, $\varphi_k: \rset^{d_k} \to \rset^{d_k}$ is a nonlinear activation function. Let $\theta = \{b^1,W^1,\ldots,b^L,W^L\}$ be the unknown parameters of the MLP and 
+where $b^1\in\rset^{d_1}$, $W^1\in\rset^{d_1\times d}$ and for all $2\leqslant k\leqslant L$, $b^k\in\rset^{d_k}$, $W^k\in\rset^{d_k\times d_{k-1}}$. For all $1\leqslant k\leqslant L$, $\varphi_k: \rset^{d_k} \to \rset^{d_k}$ is a nonlinear activation function. Let $\theta = (b^1,W^1,\ldots,b^L,W^L)$ be the unknown parameters of the MLP and 
 $$
 f_{\theta}(x) = h_{\theta}^L(x)
 $$
@@ -284,7 +284,7 @@ Similarly, for all $1\leqslant i\leqslant d_m$,  using that $z_{\theta}^m(X) = b
 \begin{align*}
 \partial_{b^m_{i}}\ell_{\theta}(X,Y) &=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)\partial_{b^m_{i}}(z_{\theta}^m(X))_k\eqsp,\\
 &=  \sum_{k=1}^{d_m} \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)\1_{i=k}\eqsp,\\
-&=  \partial_{(z_{\theta}^m(X))_k}\ell_{\theta}(X,Y)_i\eqsp.
+&=  \partial_{(z_{\theta}^m(X))_i}\ell_{\theta}(X,Y)_i\eqsp.
 \end{align*}
 Therefore,
 $$
