@@ -86,8 +86,8 @@
 
 
 \section{K-means algorithm}
-Let $n\geqslant 1$ and  $X_{1},\ldots,X_{n}$ in $\R^d$.
-The $K$-means algorithm aims at minimizing over all partitions $G=(G_{1},\ldots,G_{K})$ of $\{1,\ldots,p\}$ the criterion
+Let $n\geqslant 1$, $X_{1},\ldots,X_{n}$ in $\R^d$ and $K \geqslant 1$ a positive integer.
+The $K$-means algorithm aims at minimizing over all partitions $G=(G_{1},\ldots,G_{K})$ of $\{1,\ldots,n\}$ the criterion
 $$
 \crit(G)=\sum_{k=1}^K\sum_{a\in G_{k}}\|X_{a}-\bar{X}_{G_{k}}\|^2\quad \textrm{with}\quad \bar{X}_{G_{k}}={1\over |G_{k}|}\sum_{a\in G_{k}} X_{a}\;.
 $$
